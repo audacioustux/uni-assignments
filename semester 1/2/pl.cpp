@@ -16,7 +16,7 @@ string gradify(float mark){
     else if(mark >= 65) return "C";
     else if(mark >= 60) return "D+";
     else if(mark >= 50) return "D";
-    else if(mark < 50) return "F";
+    else return "F";
 }
 int scholarship(float _gpa){
   if(_gpa > 3.94) return 100;
@@ -63,7 +63,7 @@ int main(){
   cin.ignore();
   string _courseName; float _mark;
   cout << "Enter 5 Course name with mark obtained by student in that course:" << endl;
-  for(int i = 0; i < 5; i++){
+  for(int i = 0; i < 7; i++){
     cout << i+1 << ". Course Name:\t";
     getline(cin, _courseName);
     cout << "Obtained Mark:\t";
