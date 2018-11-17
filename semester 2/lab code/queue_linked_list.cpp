@@ -1,3 +1,9 @@
+// Question:
+// Implement Queue with linked list
+// enque, deque function
+// search number in queue and return position of that number/node (address)
+// add new number after the node found
+
 #include<bits/stdc++.h>
 using namespace std;
 
