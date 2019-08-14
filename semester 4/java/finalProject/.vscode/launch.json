@@ -6,9 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Debug (Launch) - Current File",
+            "name": "Debug (Launch)",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "Init"
         }
+        
     ]
 }

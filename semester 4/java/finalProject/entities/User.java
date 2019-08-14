@@ -24,19 +24,19 @@ public class User {
         return id;
     }
 
-    public void setPhNumber(String ph_number) {
-        this.ph_number = ph_number;
-    }
-
-    public String getPhNumber() {
-        return ph_number;
-    }
-
-    public void setLastPassLogin(Time last_login) {
+    public void setLast_login(Time last_login) {
         this.last_login = last_login;
     }
 
-    public Time getLastLogin() {
+    public Time getLast_login() {
         return last_login;
+    }
+
+    public void setPh_number(String ph_number) {
+        this.ph_number = ph_number;
+    }
+
+    public String getPh_number() {
+        return ph_number;
     }
 }

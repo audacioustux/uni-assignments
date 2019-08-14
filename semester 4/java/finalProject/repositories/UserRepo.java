@@ -6,7 +6,7 @@ import java.util.*;
 import entities.*;
 
 public class UserRepo {
-    public static User getUser(String ph_number) throws SQLException {
+    public User getUser(String ph_number) throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
             String sql = "SELECT id, last_login FROM user WHERE ph_number=?";
 
@@ -16,31 +16,45 @@ public class UserRepo {
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
                         User user = new User(rs.getInt("id"), ph_number);
-                        user.setLastPassLogin(rs.getTime("last_login"));
+                        user.setLast_login(rs.getTime("last_login"));
                         return user;
-                    } else {
-                        User newUser = insertUser(ph_number);
-                        newUser.setPhNumber(ph_number);
-                        return newUser;
                     }
+                    return insertUser(ph_number);
                 }
             }
         }
     }
 
-    public static User insertUser(String ph_number) throws SQLException {
+    public boolean authenticate(User user, String rawPassword) throws SQLException {
+        try (DatabaseConnection dbc = new DatabaseConnection()) {
+            String sql = "SELECT password FROM user WHERE id=?";
+
+            try (PreparedStatement ps = dbc.connection.prepareStatement(sql)) {
+                ps.setInt(1, user.getId());
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getString("password") == rawPassword ? true : false;
+                    }
+                    return false;
+                }
+            }
+        }
+    }
+
+    public User insertUser(String ph_number) throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
             String Usql = "INSERT INTO user (ph_number, password) VALUES (?,?)";
 
             try (PreparedStatement Ups = dbc.connection.prepareStatement(Usql, Statement.RETURN_GENERATED_KEYS)) {
                 Ups.setString(1, ph_number);
-                Ups.setString(1, genRandomAlphanumStr(6));
+                Ups.setString(2, genRandomAlphanumStr(6));
 
                 Ups.executeUpdate();
 
                 try (ResultSet rs = Ups.getGeneratedKeys()) {
                     rs.next();
-                    return new User(rs.getInt(1));
+                    return new User(rs.getInt(1), ph_number);
                 }
             }
         }
@@ -64,7 +78,7 @@ public class UserRepo {
         return str;
     }
 
-    public static void setPassword(User user, String rawPassword) throws SQLException {
+    public void setPassword(User user, String rawPassword) throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
             String sql = "UPDATE user SET password=? WHERE id=?";
 
@@ -79,7 +93,7 @@ public class UserRepo {
         // TODO: send to user phone number
     }
 
-    public static void setPassword(User user) throws SQLException {
+    public void setPassword(User user) throws SQLException {
         setPassword(user, genRandomAlphanumStr(6));
     }
 }
