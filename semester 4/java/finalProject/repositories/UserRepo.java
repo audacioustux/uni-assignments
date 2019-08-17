@@ -6,20 +6,39 @@ import java.util.*;
 import entities.*;
 
 public class UserRepo {
-    public User getUser(String ph_number) throws SQLException {
+    public User getUserOrInsert(String ph_number) throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
-            String sql = "SELECT id, last_login FROM user WHERE ph_number=?";
+            String sql = "SELECT id, last_login, isManager FROM user WHERE ph_number=?";
 
             try (PreparedStatement ps = dbc.connection.prepareStatement(sql)) {
                 ps.setString(1, ph_number);
 
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        User user = new User(rs.getInt("id"), ph_number);
+                        User user = new User(rs.getInt("id"), ph_number, rs.getBoolean("isManager"));
                         user.setLast_login(rs.getTime("last_login"));
                         return user;
                     }
                     return insertUser(ph_number);
+                }
+            }
+        }
+    }
+
+    public User getUser(String ph_number) throws SQLException {
+        try (DatabaseConnection dbc = new DatabaseConnection()) {
+            String sql = "SELECT id, last_login, isManager FROM user WHERE ph_number=?";
+
+            try (PreparedStatement ps = dbc.connection.prepareStatement(sql)) {
+                ps.setString(1, ph_number);
+
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        User user = new User(rs.getInt("id"), ph_number, rs.getBoolean("isManager"));
+                        user.setLast_login(rs.getTime("last_login"));
+                        return user;
+                    }
+                    return null;
                 }
             }
         }
@@ -34,7 +53,7 @@ public class UserRepo {
 
                 try (ResultSet rs = ps.executeQuery()) {
                     if (rs.next()) {
-                        return rs.getString("password") == rawPassword ? true : false;
+                        return rawPassword.equals(rs.getString("password")) ? true : false;
                     }
                     return false;
                 }
@@ -54,7 +73,26 @@ public class UserRepo {
 
                 try (ResultSet rs = Ups.getGeneratedKeys()) {
                     rs.next();
-                    return new User(rs.getInt(1), ph_number);
+                    return new User(rs.getInt(1), ph_number, false);
+                }
+            }
+        }
+    }
+
+    public User insertManager(String ph_number) throws SQLException {
+        try (DatabaseConnection dbc = new DatabaseConnection()) {
+            String Usql = "INSERT INTO user (ph_number, password, isManager) VALUES (?,?,?)";
+
+            try (PreparedStatement Ups = dbc.connection.prepareStatement(Usql, Statement.RETURN_GENERATED_KEYS)) {
+                Ups.setString(1, ph_number);
+                Ups.setString(2, genRandomAlphanumStr(6));
+                Ups.setBoolean(3, true);
+
+                Ups.executeUpdate();
+
+                try (ResultSet rs = Ups.getGeneratedKeys()) {
+                    rs.next();
+                    return new User(rs.getInt(1), ph_number, true);
                 }
             }
         }

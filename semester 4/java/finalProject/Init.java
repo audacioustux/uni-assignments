@@ -1,10 +1,17 @@
-import repositories.*;
-import java.sql.*;
 
-// import frames.*;
+// import repositories.*;
+import java.sql.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import frames.*;
+import entities.*;
+
 public class Init {
-    public static void main(String args[]) throws SQLException {
-        OrderRepo oRep = new OrderRepo();
-        System.out.println(oRep.getOrders());
+    static User loggedUser;
+
+    public static void main(String args[]) {
+        WelcomeFrame welcomeFrame = new WelcomeFrame();
+        loggedUser = welcomeFrame.showFrame();
     }
 }

@@ -8,7 +8,7 @@ import entities.*;
 public class ItemRepo {
     public Item getItem(int id) throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
-            String sql = "SELECT price, detail, processing_time, name FROM items WHERE id=?";
+            String sql = "SELECT price, detail, processing_time, name FROM Items WHERE id=?";
 
             try (PreparedStatement ps = dbc.connection.prepareStatement(sql)) {
                 ps.setInt(1, id);
@@ -26,13 +26,13 @@ public class ItemRepo {
         }
     }
 
-    public List<Item> getItems() throws SQLException {
+    public ArrayList<Item> getItems() throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
-            String sql = "SELECT * FROM items DESC";
+            String sql = "SELECT * FROM Items";
 
             try (PreparedStatement ps = dbc.connection.prepareStatement(sql)) {
                 try (ResultSet rs = ps.executeQuery()) {
-                    List<Item> items = new ArrayList<Item>();
+                    ArrayList<Item> items = new ArrayList<Item>();
                     while (rs.next()) {
                         Item item = new Item(rs.getInt("id"), rs.getDouble("price"), rs.getString("name"));
                         item.setProcessing_time(rs.getTime("processing_time"));

@@ -25,13 +25,13 @@ public class CategoryRepo {
         }
     }
 
-    public List<Category> getCategories() throws SQLException {
+    public ArrayList<Category> getCategories() throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
             String sql = "SELECT * FROM category";
 
             try (PreparedStatement ps = dbc.connection.prepareStatement(sql)) {
                 try (ResultSet rs = ps.executeQuery()) {
-                    List<Category> categories = new ArrayList<Category>();
+                    ArrayList<Category> categories = new ArrayList<Category>();
                     while (rs.next()) {
                         Category category = new Category(rs.getInt("id"), rs.getString("name"));
                         category.setDescription(rs.getString("description"));
@@ -43,15 +43,15 @@ public class CategoryRepo {
         }
     }
 
-    public List<Category> getCategoriesOf(Item item) throws SQLException {
+    public ArrayList<Category> getCategoriesOf(Item item) throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
-            String sql = "SELECT category.* FROM categoryItem, items WHERE item=? and category=id";
+            String sql = "SELECT category.* FROM CategoryItem, Items WHERE item=? and category=id";
 
             try (PreparedStatement ps = dbc.connection.prepareStatement(sql)) {
                 ps.setInt(1, item.getId());
 
                 try (ResultSet rs = ps.executeQuery()) {
-                    List<Category> categories = new ArrayList<Category>();
+                    ArrayList<Category> categories = new ArrayList<Category>();
                     while (rs.next()) {
                         Category category = new Category(rs.getInt("id"), rs.getString("name"));
                         category.setDescription(rs.getString("description"));
@@ -63,15 +63,15 @@ public class CategoryRepo {
         }
     }
 
-    public List<Item> getItems(Category category) throws SQLException {
+    public ArrayList<Item> getItems(Category category) throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
-            String sql = "SELECT items.* FROM categoryItem, items WHERE item=id and category=?";
+            String sql = "SELECT items.* FROM CategoryItem, Items WHERE item=id and category=?";
 
             try (PreparedStatement ps = dbc.connection.prepareStatement(sql)) {
                 ps.setInt(1, category.getId());
 
                 try (ResultSet rs = ps.executeQuery()) {
-                    List<Item> items = new ArrayList<Item>();
+                    ArrayList<Item> items = new ArrayList<Item>();
                     while (rs.next()) {
                         Item item = new Item(rs.getInt("id"), rs.getDouble("price"), rs.getString("name"));
                         item.setProcessing_time(rs.getTime("processing_time"));
