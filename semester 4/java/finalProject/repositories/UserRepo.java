@@ -2,10 +2,10 @@ package repositories;
 
 import java.sql.*;
 import java.util.*;
-
+import interfaces.*;
 import entities.*;
 
-public class UserRepo {
+public class UserRepo implements IUserRepo {
     public User getUserOrInsert(String ph_number) throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
             String sql = "SELECT id, last_login, isManager FROM user WHERE ph_number=?";
@@ -66,8 +66,11 @@ public class UserRepo {
             String Usql = "INSERT INTO user (ph_number, password) VALUES (?,?)";
 
             try (PreparedStatement Ups = dbc.connection.prepareStatement(Usql, Statement.RETURN_GENERATED_KEYS)) {
+                final String rawPassword = genRandomAlphanumStr(6);
+                System.out.println(rawPassword);
+
                 Ups.setString(1, ph_number);
-                Ups.setString(2, genRandomAlphanumStr(6));
+                Ups.setString(2, rawPassword);
 
                 Ups.executeUpdate();
 

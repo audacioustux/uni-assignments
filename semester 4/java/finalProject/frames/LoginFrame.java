@@ -9,8 +9,9 @@ import javax.swing.border.*;
 
 import entities.*;
 import repositories.*;
+import interfaces.*;
 
-public class LoginFrame extends JDialog {
+public class LoginFrame extends JDialog implements IFrame<User> {
     JLabel uLabel, passLabel;
     JPasswordField passTF;
     JTextField uTF;

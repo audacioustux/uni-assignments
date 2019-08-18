@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: db
--- Generation Time: Aug 14, 2019 at 03:41 PM
+-- Generation Time: Aug 17, 2019 at 04:34 PM
 -- Server version: 8.0.17
 -- PHP Version: 7.2.19
 
@@ -123,17 +123,21 @@ CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `ph_number` varchar(15) NOT NULL,
   `password` tinytext NOT NULL,
-  `last_login` datetime DEFAULT NULL
+  `last_login` datetime DEFAULT NULL,
+  `isManager` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `ph_number`, `password`, `last_login`) VALUES
-(1, '+8801823170374', 'password', '2007-12-15 23:50:26'),
-(2, '+8801915024940', 'password', '2018-12-15 12:50:26'),
-(3, '+8801823170373', 'M6AwQP', NULL);
+INSERT INTO `user` (`id`, `ph_number`, `password`, `last_login`, `isManager`) VALUES
+(1, '+8801823170374', 'password', '2007-12-15 23:50:26', 1),
+(2, '+8801915024940', 'password', '2018-12-15 12:50:26', 0),
+(3, '+8801823170373', 'M6AwQP', NULL, 0),
+(4, 'fhfghgf', 'D8gwQ5', NULL, 0),
+(5, 'ghghgh', 'NcC2AK', NULL, 0),
+(6, '', 'WBkJc1', NULL, 0);
 
 --
 -- Indexes for dumped tables
@@ -199,7 +203,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Constraints for dumped tables

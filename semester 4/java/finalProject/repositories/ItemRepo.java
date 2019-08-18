@@ -4,8 +4,9 @@ import java.sql.*;
 import java.util.*;
 
 import entities.*;
+import interfaces.*;
 
-public class ItemRepo {
+public class ItemRepo implements IItemRepo {
     public Item getItem(int id) throws SQLException {
         try (DatabaseConnection dbc = new DatabaseConnection()) {
             String sql = "SELECT price, detail, processing_time, name FROM Items WHERE id=?";

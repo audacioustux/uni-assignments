@@ -5,13 +5,17 @@ import java.sql.SQLException;
 import entities.*;
 
 public interface IUserRepo {
-    int getUserId(String ph_number) throws SQLException;
+    User getUserOrInsert(String ph_number) throws SQLException;
 
-    User getUser(int userId, String rawPassword) throws SQLException;
+    User getUser(String ph_number) throws SQLException;
 
-    void insertUser(User u) throws SQLException;
+    User insertUser(String ph_number) throws SQLException;
 
-    void updateUser(User u) throws SQLException;
+    boolean authenticate(User user, String rawPassword) throws SQLException;
 
-    void deleteUser(String userId) throws SQLException;
+    User insertManager(String userId) throws SQLException;
+
+    void setPassword(User user, String rawPassword) throws SQLException;
+
+    void setPassword(User user) throws SQLException;
 }

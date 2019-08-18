@@ -4,8 +4,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import entities.*;
+import interfaces.*;
 
-public class WelcomeFrame extends JFrame {
+public class WelcomeFrame extends JFrame implements IFrame<User> {
 	JPanel panel;
 	JLabel imgLabel;
 	JButton managerBtn, customerBtn;
@@ -32,8 +33,11 @@ public class WelcomeFrame extends JFrame {
 		managerBtn = new JButton("Manager Login");
 		managerBtn.setBounds(400, 500, 170, 50);
 		managerBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				_user = new LoginFrame(WelcomeFrame.this, true).showFrame();
+				setVisible(false);
+				new OrderManagerFrame(_user).showFrame();
+				dispose();
 			}
 		});
 		panel.add(managerBtn);
@@ -41,7 +45,7 @@ public class WelcomeFrame extends JFrame {
 		customerBtn = new JButton("Customer Login");
 		customerBtn.setBounds(800, 500, 170, 50);
 		customerBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
 				_user = new LoginFrame(WelcomeFrame.this).showFrame();
 				setVisible(false);
 				new MenuFrame(_user).showFrame();

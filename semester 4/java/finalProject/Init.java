@@ -13,5 +13,8 @@ public class Init {
     public static void main(String args[]) {
         WelcomeFrame welcomeFrame = new WelcomeFrame();
         loggedUser = welcomeFrame.showFrame();
+        // java.sql.Date CreatedDate = new java.sql.Date(System.currentTimeMillis());
+        // java.sql.Time CreatedTime = new java.sql.Time(System.currentTimeMillis());
+        // System.out.println(CreatedDate.toString()+ "%%"+ CreatedTime.toString());
     }
 }
