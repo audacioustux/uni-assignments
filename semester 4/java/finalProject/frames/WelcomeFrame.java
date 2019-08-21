@@ -35,9 +35,11 @@ public class WelcomeFrame extends JFrame implements IFrame<User> {
 		managerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				_user = new LoginFrame(WelcomeFrame.this, true).showFrame();
-				setVisible(false);
-				new OrderManagerFrame(_user).showFrame();
-				dispose();
+				if(_user != null){
+					setVisible(false);
+					new OrderManagerFrame(_user).showFrame();
+					dispose();
+				}
 			}
 		});
 		panel.add(managerBtn);
@@ -47,9 +49,11 @@ public class WelcomeFrame extends JFrame implements IFrame<User> {
 		customerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				_user = new LoginFrame(WelcomeFrame.this).showFrame();
-				setVisible(false);
-				new MenuFrame(_user).showFrame();
-				dispose();
+				if(_user != null){
+					setVisible(false);
+					new MenuFrame(_user).showFrame();
+					dispose();
+				}
 			}
 		});
 		panel.add(customerBtn);

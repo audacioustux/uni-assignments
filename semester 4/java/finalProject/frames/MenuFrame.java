@@ -20,6 +20,23 @@ public class MenuFrame extends JFrame implements IFrame<Void> {
         setLayout(new BorderLayout());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+        CategoryRepo cRepo = new CategoryRepo();
+        try {
+            ArrayList<Category> categoryObjs = cRepo.getCategories();
+            String[] categories = new String[categoryObjs.size() + 1];
+
+            for (int i = 1; i < categoryObjs.size() + 1; i++) {
+                Category category = categoryObjs.get(i - 1);
+                categories[i] = category.getName();
+            }
+
+            JComboBox<String> catList = new JComboBox<String>(categories);
+            catList.setSelectedIndex(0);
+
+            add(catList);
+        } catch (SQLException e) {
+        }
+
         ItemRepo iRepo = new ItemRepo();
         try {
             ArrayList<Item> itemObjs = iRepo.getItems();

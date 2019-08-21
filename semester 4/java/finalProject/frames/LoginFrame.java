@@ -18,7 +18,7 @@ public class LoginFrame extends JDialog implements IFrame<User> {
     JPanel buttJP, panel, userJP, passJP;
     JButton uNextButt, uBackButt, uLoginButt;
 
-    User _user;
+    User _user, user;
     UserRepo uRepo;
 
     public LoginFrame(JFrame parent, boolean reqManager) {
@@ -132,6 +132,7 @@ public class LoginFrame extends JDialog implements IFrame<User> {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (uRepo.authenticate(_user, String.valueOf(passTF.getPassword()))) {
+                        user = _user;
                         setVisible(false);
                         dispose();
                     } else {
@@ -154,6 +155,6 @@ public class LoginFrame extends JDialog implements IFrame<User> {
 
     public User showFrame() {
         setVisible(true);
-        return _user;
+        return user;
     }
 }
