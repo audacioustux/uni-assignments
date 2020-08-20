@@ -1,0 +1,45 @@
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.csprojAssemblyReference.cache
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\MainWindow.g.cs
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\App.g.cs
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat_MarkupCompile.cache
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat_MarkupCompile.lref
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\bin\Debug\LibreCat.exe.config
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\bin\Debug\LibreCat.exe
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\bin\Debug\LibreCat.pdb
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\MainWindow.baml
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.g.resources
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.Properties.Resources.resources
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.Resource1.resources
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.csproj.GenerateResource.cache
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.exe
+C:\Users\Tanjim Hossain\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.pdb
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\bin\Debug\LibreCat.exe.config
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\bin\Debug\LibreCat.exe
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\bin\Debug\LibreCat.pdb
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.csprojAssemblyReference.cache
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\MainWindow.g.cs
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\App.g.cs
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat_MarkupCompile.cache
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat_MarkupCompile.lref
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\MainWindow.baml
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.g.resources
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.Properties.Resources.resources
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.csproj.GenerateResource.cache
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.exe
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.pdb
+C:\Users\hossa\OneDrive\Documents\GitHub\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.Resources.resources
+Z:\shared\LibreCat\LibreCat\LibreCat\bin\Debug\LibreCat.exe.config
+Z:\shared\LibreCat\LibreCat\LibreCat\bin\Debug\LibreCat.exe
+Z:\shared\LibreCat\LibreCat\LibreCat\bin\Debug\LibreCat.pdb
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.csprojAssemblyReference.cache
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\MainWindow.g.cs
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\App.g.cs
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat_MarkupCompile.cache
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat_MarkupCompile.lref
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\MainWindow.baml
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.g.resources
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.Properties.Resources.resources
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.Resources.resources
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.csproj.GenerateResource.cache
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.exe
+Z:\shared\LibreCat\LibreCat\LibreCat\obj\Debug\LibreCat.pdb
