@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
-use Phinx\Util\Literal;
 
 final class TagInitMigration extends AbstractMigration
 {
@@ -25,14 +24,7 @@ final class TagInitMigration extends AbstractMigration
             ->addColumn('name', 'string', ['limit' => 48])
             ->addColumn('description', 'text')
             ->addColumn('guidline', 'text')
-            ->addColumn('created', 'datetime', [
-                'timezone' => true,
-                'default' => Literal::from('now()')
-            ])
-            ->addColumn('updated', 'datetime', [
-                'timezone' => true,
-                'null' => true
-            ])
+            ->addTimestampsWithTimezone()
             ->addIndex(['name'], ['unique' => true])
             ->create();
     }

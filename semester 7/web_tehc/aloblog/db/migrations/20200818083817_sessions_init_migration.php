@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
-use Phinx\Util\Literal;
 
 final class SessionsInitMigration extends AbstractMigration
 {
@@ -26,7 +25,7 @@ final class SessionsInitMigration extends AbstractMigration
             ->addColumn('user_id', 'integer')
             ->addColumn('created', 'datetime', [
                 'timezone' => true,
-                'default' => Literal::from('now()')
+                'default' => 'CURRENT_TIMESTAMP'
             ])
             ->addColumn('agent', 'string')
             ->addColumn('ip', 'string', ['limit' => 45])

@@ -6,7 +6,7 @@ class DBH
 {
     private static $conn = null;
 
-    protected function connect()
+    public static function connect()
     {
         if (is_null(self::$conn)) {
             $user = getenv("DB_USER");
@@ -18,7 +18,7 @@ class DBH
 
             try {
                 self::$conn = new \PDO($dsn, $user, $pass);
-                self::$conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
+                self::$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             } catch (\PDOException $e) {
                 echo 'db connection err: ' . $e->getMessage();
             }

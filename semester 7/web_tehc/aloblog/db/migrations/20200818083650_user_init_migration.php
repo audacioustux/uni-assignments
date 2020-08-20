@@ -2,8 +2,12 @@
 
 declare(strict_types=1);
 
+require __DIR__ . '/../../vendor/autoload.php';
+
 use Phinx\Migration\AbstractMigration;
-use Phinx\Util\Literal;
+
+use App\Core‌‌‌‌\Enums\UserStateEnum;
+use App\Core‌‌‌‌\Enums\UserRoleEnum;
 
 final class UserInitMigration extends AbstractMigration
 {
@@ -22,19 +26,12 @@ final class UserInitMigration extends AbstractMigration
     {
         $table = $this->table('users');
         $table->addColumn('username', 'string', ['limit' => 24])
-            ->addColumn('avatar', 'uuid')
+            ->addColumn('avatar', 'uuid', ['null' => true])
             ->addColumn('password', 'string')
             ->addColumn('email', 'string')
-            ->addColumn('role', 'char')
-            ->addColumn('state', 'char')
-            ->addColumn('created', 'datetime', [
-                'timezone' => true,
-                'default' => Literal::from('now()')
-            ])
-            ->addColumn('updated', 'datetime', [
-                'timezone' => true,
-                'null' => true
-            ])
+            ->addColumn('role', 'char', ['default' => UserRoleEnum::REGULAR()])
+            ->addColumn('state', 'char', ['default' => UserStateEnum::ACTIVE()])
+            ->addTimestampsWithTimezone()
             ->addIndex(['username'], ['unique' => true])
             ->addIndex(['email'], ['unique' => true])
             ->addIndex('state')

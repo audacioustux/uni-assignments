@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
-use Phinx\Util\Literal;
 
 final class BlogReactsInitMigration extends AbstractMigration
 {
@@ -25,14 +24,7 @@ final class BlogReactsInitMigration extends AbstractMigration
             ->addColumn('blog_id', 'integer')
             ->addColumn('user_id', 'integer')
             ->addColumn('react', 'char')
-            ->addColumn('created', 'datetime', [
-                'timezone' => true,
-                'default' => Literal::from('now()')
-            ])
-            ->addColumn('updated', 'datetime', [
-                'timezone' => true,
-                'null' => true
-            ])
+            ->addTimestampsWithTimezone()
             ->addForeignKey('user_id', 'users', 'id', [
                 'delete' => 'CASCADE', 'update' => 'RESTRICT'
             ])

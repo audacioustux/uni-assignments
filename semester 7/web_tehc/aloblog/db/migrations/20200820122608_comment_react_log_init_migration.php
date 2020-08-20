@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
-use Phinx\Util\Literal;
 
 final class CommentReactLogInitMigration extends AbstractMigration
 {
@@ -25,14 +24,7 @@ final class CommentReactLogInitMigration extends AbstractMigration
             ->addColumn('comment_id', 'integer')
             ->addColumn('user_id', 'integer')
             ->addColumn('is_liked', 'boolean')
-            ->addColumn('created', 'datetime', [
-                'timezone' => true,
-                'default' => Literal::from('now()')
-            ])
-            ->addColumn('updated', 'datetime', [
-                'timezone' => true,
-                'null' => true
-            ])
+            ->addTimestampsWithTimezone()
             ->addForeignKey('user_id', 'users', 'id', [
                 'delete' => 'CASCADE', 'update' => 'RESTRICT'
             ])

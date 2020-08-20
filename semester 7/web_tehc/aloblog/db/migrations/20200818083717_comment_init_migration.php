@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
-use Phinx\Util\Literal;
 
 final class CommentInitMigration extends AbstractMigration
 {
@@ -26,14 +25,7 @@ final class CommentInitMigration extends AbstractMigration
             ->addColumn('user_id', 'integer')
             ->addColumn('content', 'text')
             ->addColumn('state', 'char')
-            ->addColumn('created', 'datetime', [
-                'timezone' => true,
-                'default' => Literal::from('now()')
-            ])
-            ->addColumn('updated', 'datetime', [
-                'timezone' => true,
-                'null' => true
-            ])
+            ->addTimestampsWithTimezone()
             ->addForeignKey('user_id', 'users', 'id', [
                 'delete' => 'CASCADE', 'update' => 'RESTRICT'
             ])

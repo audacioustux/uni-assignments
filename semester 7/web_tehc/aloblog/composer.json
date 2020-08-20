@@ -4,7 +4,10 @@
     "type": "project",
     "require": {
         "sebastian/diff": "^4.0",
-        "robmorgan/phinx": "^0.12.3"
+        "robmorgan/phinx": "^0.12.3",
+        "myclabs/php-enum": "^1.7",
+        "ramsey/uuid": "^4.1",
+        "fzaninotto/faker": "^1.9"
     },
     "authors": [
         {
