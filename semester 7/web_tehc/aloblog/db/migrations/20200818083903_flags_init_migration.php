@@ -24,8 +24,8 @@ final class FlagsInitMigration extends AbstractMigration
             ->addColumn('user_id', 'integer')
             ->addColumn('link', 'text')
             ->addColumn('message', 'string')
-            ->addColumn('flagType', 'char')
-            ->addColumn('action', 'char')
+            ->addColumn('flagType', 'char', ['limit' => 1])
+            ->addColumn('action', 'char', ['limit' => 1])
             ->addTimestampsWithTimezone()
             ->addForeignKey('user_id', 'users', 'id', [
                 'delete' => 'CASCADE', 'update' => 'RESTRICT'

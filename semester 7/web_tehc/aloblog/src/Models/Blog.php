@@ -21,14 +21,9 @@ class Blog
     // Get Blogs
     public function read_by_id()
     {
-        // Create query
-        $query = "SELECT b.id, b.category_id, b.title, b.body, b.author, b.created_at
-                                  FROM { $this->table } b
-                                  ORDER BY
-                                    b.created_at DESC";
+        $query = "SELECT 1 + 1";
 
-        // Prepare statement
-        $stmt = $this->conn->prepare($query);
+        $stmt = DBH::connect()->prepare($query);
 
         // Execute query
         $stmt->execute();

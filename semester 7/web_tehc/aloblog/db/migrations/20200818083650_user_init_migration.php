@@ -37,5 +37,16 @@ final class UserInitMigration extends AbstractMigration
             ->addIndex('state')
             ->addIndex('role')
             ->create();
+
+        if ($this->isMigratingUp()) {
+            $table->insert(
+                [[
+                    'username' => getenv('SUPERUSER_USERNAME'),
+                    'password' => password_hash(getenv('SUPERUSER_PWD'), PASSWORD_DEFAULT),
+                    'email' => getenv('SUPERUSER_EMAIL'),
+                    'role' => UserRoleEnum::SUPERUSER()
+                ]]
+            )->save();
+        }
     }
 }

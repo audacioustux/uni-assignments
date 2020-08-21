@@ -23,7 +23,7 @@ final class BlogReactsInitMigration extends AbstractMigration
         $table = $table
             ->addColumn('blog_id', 'integer')
             ->addColumn('user_id', 'integer')
-            ->addColumn('react', 'char')
+            ->addColumn('react', 'char', ['limit' => 1])
             ->addTimestampsWithTimezone()
             ->addForeignKey('user_id', 'users', 'id', [
                 'delete' => 'CASCADE', 'update' => 'RESTRICT'

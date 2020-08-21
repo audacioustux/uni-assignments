@@ -25,7 +25,7 @@ final class BlogInitMigration extends AbstractMigration
             ->addColumn('slug', 'string')
             ->addColumn('content', 'text')
             ->addColumn('thumbnail', 'uuid')
-            ->addColumn('state', 'char')
+            ->addColumn('state', 'char', ['limit' => 1])
             ->addForeignKey("user_id", 'users', 'id', [
                 'delete' => 'CASCADE', 'update' => 'RESTRICT'
             ])

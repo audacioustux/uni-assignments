@@ -23,7 +23,7 @@ final class UserRelInitMigration extends AbstractMigration
         $table = $table
             ->addColumn('from_id', 'integer')
             ->addColumn('to_id', 'integer')
-            ->addColumn('state', 'char')
+            ->addColumn('state', 'char', ['limit' => 1])
             ->addTimestampsWithTimezone()
             ->addForeignKey('from_id', 'users', 'id', [
                 'delete' => 'CASCADE', 'update' => 'RESTRICT'

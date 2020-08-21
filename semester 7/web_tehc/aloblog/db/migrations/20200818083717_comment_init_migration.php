@@ -24,7 +24,7 @@ final class CommentInitMigration extends AbstractMigration
             ->addColumn('blog_id', 'integer')
             ->addColumn('user_id', 'integer')
             ->addColumn('content', 'text')
-            ->addColumn('state', 'char')
+            ->addColumn('state', 'char', ['limit' => 1])
             ->addTimestampsWithTimezone()
             ->addForeignKey('user_id', 'users', 'id', [
                 'delete' => 'CASCADE', 'update' => 'RESTRICT'

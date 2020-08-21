@@ -1,4 +1,6 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
 
-echo (App\Core\Enums\BlogReactEnum::LOVE());
+use App\Models\Blog;
+
+var_dump((new Blog())->read_by_id());
