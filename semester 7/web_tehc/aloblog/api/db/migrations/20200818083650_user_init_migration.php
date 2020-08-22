@@ -6,8 +6,8 @@ require __DIR__ . '/../../vendor/autoload.php';
 
 use Phinx\Migration\AbstractMigration;
 
-use App\Core‌‌‌‌\Enums\UserStateEnum;
 use App\Core‌‌‌‌\Enums\UserRoleEnum;
+use App\Core‌‌‌‌\Enums\UserStateEnum;
 
 final class UserInitMigration extends AbstractMigration
 {
