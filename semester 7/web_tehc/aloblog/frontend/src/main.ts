@@ -6,7 +6,7 @@ import store from "./store"
 import VueAxios from 'vue-axios'
 
 createApp(App)
+  .use(VueAxios)
   .use(store)
   .use(router)
-  .use(VueAxios)
   .mount("#app")

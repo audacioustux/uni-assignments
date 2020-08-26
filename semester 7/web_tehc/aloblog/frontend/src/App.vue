@@ -1,32 +1,18 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
-  </div>
+  <header class="flex bg-white">
+    <img class="logo" alt="Vue logo" src="./assets/logo.png" />
+  </header>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<style lang="scss" scoped>
+header {
+  height: 48px;
+  background-color: #e9eaec;
+  .logo {
+    height: 40px;
+    @apply .text-white;
   }
 }
+</style>
+<style>
 </style>
