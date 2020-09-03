@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use App\Core\DBH;
+use Cake\Database\Query;
+use Ramsey\Uuid\Type\Integer;
 
 class Blog
 {
     private $table = 'blogs';
+    private $conn;
 
     public $id;
     public $title;
@@ -18,16 +21,25 @@ class Blog
     public $created_at;
     public $updated_at;
 
-    // Get Blogs
-    public function read_by_id()
+    public function __construct($conn)
     {
-        $query = "SELECT 1 + 1";
+        $this->conn = $conn;
+    }
 
-        $stmt = DBH::connect()->prepare($query);
-
-        // Execute query
+    public function get_blogs($cursor = null, $limit = 5){
+        $query = "SELECT * from {$this->table} 
+        WHERE id < :cursor
+        ORDER BY created_at, id DESC
+        LIMIT :limit";
+        
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindParam(':cursor', $cursor, \PDO::PARAM_INT);
+        
         $stmt->execute();
-
-        return $stmt;
+        
+        echo '<pre>';
+        var_dump($stmt->fetchAll(\PDO::FETCH_ASSOC));
+        echo '</pre>';
     }
 }

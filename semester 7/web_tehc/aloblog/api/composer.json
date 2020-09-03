@@ -4,11 +4,11 @@
     "type": "project",
     "require": {
         "sebastian/diff": "^4.0",
-        "robmorgan/phinx": "^0.12.3",
         "myclabs/php-enum": "^1.7",
         "ramsey/uuid": "^4.1",
         "fzaninotto/faker": "^1.9",
-        "cocur/slugify": "^4.0"
+        "cocur/slugify": "^4.0",
+        "robmorgan/phinx": "^0.12.4"
     },
     "authors": [
         {
@@ -18,7 +18,18 @@
     ],
     "autoload": {
         "psr-4": {
-            "App\\": "App/"
+            "App\\": "App/",
+            "Migrations\\": "db/migrations/"
         }
+    },
+    "scripts": {
+        "db:wait": "./bin/wait_mysql.php",
+        "db:populate": ["phinx migrate -vvv", "phinx seed:run -vvv"],
+        "db:provision": ["docker-compose rm -fs", "docker-compose up -d"],
+        "db:reset": [ 
+            "@db:provision", 
+            "@db:wait",
+            "@db:populate"
+        ]
     }
 }

@@ -5,10 +5,10 @@ declare(strict_types=1);
 use Phinx\Migration\AbstractMigration;
 use Migrations\Helpers\ReactsSchema;
 
-final class BlogReactsInitMigration extends AbstractMigration
+final class CommentReactsInitMigration extends AbstractMigration
 {
-    private $table = "blogs";
-    private $name = "blog";
+    private $table = "comments";
+    private $name = "comment";
 
     use ReactsSchema;
 

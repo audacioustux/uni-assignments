@@ -16,12 +16,9 @@ class DBH
 
             $dsn = 'mysql:host=' . $host . ';dbname=' . $name;
 
-            try {
-                self::$conn = new \PDO($dsn, $user, $pass);
-                self::$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-            } catch (\PDOException $e) {
-                echo 'db connection err: ' . $e->getMessage();
-            }
+            self::$conn = new \PDO($dsn, $user, $pass);
+            self::$conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+            self::$conn->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
         }
         return self::$conn;
     }

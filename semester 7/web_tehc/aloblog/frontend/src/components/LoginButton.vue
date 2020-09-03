@@ -1,7 +1,15 @@
 <template>
   <button>
-    <span class="mdi mdi-login"></span>
-    Login
+    <svg
+      fill="currentColor"
+      class="inline mr-1"
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+    >
+      <path :d="require('@mdi/js').mdiLogin" />
+    </svg>
+    <span class="text-sm">Sign In</span>
   </button>
 </template>
 
@@ -28,6 +36,8 @@ button {
   background-size: 200%;
   background-position: 0 0;
   transition: background ease-in-out 0.2s;
+  display: flex;
+  align-items: center;
   &:hover {
     background-position: 100% 100%;
   }
