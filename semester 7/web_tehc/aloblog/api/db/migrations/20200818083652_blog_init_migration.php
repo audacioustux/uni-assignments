@@ -18,6 +18,10 @@ final class BlogInitMigration extends AbstractMigration
             ->addColumn('thumbnail', 'uuid', ['null' => true])
             ->addColumn('read_time', 'integer')
             ->addColumn('state', 'char', ['limit' => 1, 'default' => BlogStateEnum::DRAFT()->getValue()])
+            ->addColumn('published_at', 'datetime', [
+                'timezone' => true,
+                'null' => true,
+            ])
             ->addForeignKey("user_id", 'users', 'id', [
                 'delete' => 'CASCADE', 'update' => 'RESTRICT'
             ])

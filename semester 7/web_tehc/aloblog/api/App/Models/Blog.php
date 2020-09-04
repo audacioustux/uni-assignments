@@ -3,43 +3,40 @@
 namespace App\Models;
 
 use App\Core\DBH;
-use Cake\Database\Query;
-use Ramsey\Uuid\Type\Integer;
+use App\Core\Enums\BlogStateEnum;
 
 class Blog
 {
-    private $table = 'blogs';
-    private $conn;
+    private const TABLE = 'blogs';
 
-    public $id;
-    public $title;
-    public $user_id;
-    public $slug;
-    public $content;
-    public $thumbnail;
-    public $state;
-    public $created_at;
-    public $updated_at;
+    public function get_all(int $cursor = null, $limit = 10){
+        // TODO: refactor.. -_-
+        $_q_where_cursor = $cursor ? 'id < ' . $cursor . ' AND' : '';
+        $query = "SELECT * from %s WHERE {$_q_where_cursor} state = :state
+        ORDER BY id DESC
+        LIMIT :limit";
 
-    public function __construct($conn)
-    {
-        $this->conn = $conn;
+        $stmt = DBH::connect()->prepare(sprintf($query, self::TABLE));
+        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->bindParam(':state', BlogStateEnum::LISTED()->getValue());
+
+        $stmt->execute();
+        
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function get_blogs($cursor = null, $limit = 5){
-        $query = "SELECT * from {$this->table} 
-        WHERE id < :cursor
-        ORDER BY created_at, id DESC
-        LIMIT :limit";
+    public function get(int $id){
+        $query = "SELECT * from %s WHERE id = :id";
         
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
-        $stmt->bindParam(':cursor', $cursor, \PDO::PARAM_INT);
+        $stmt = DBH::connect()->prepare(sprintf($query, self::TABLE));
+        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
         
         $stmt->execute();
         
-        echo '<pre>';
-        var_dump($stmt->fetchAll(\PDO::FETCH_ASSOC));
-        echo '</pre>';
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function create(string $title, int $user_id, string $content, string $state) {
+        
     }
 }
