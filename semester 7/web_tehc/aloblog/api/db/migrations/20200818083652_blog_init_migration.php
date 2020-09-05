@@ -11,7 +11,7 @@ final class BlogInitMigration extends AbstractMigration
     public function change(): void
     {
         $table = $this->table('blogs');
-        $table = $table->addColumn('title', 'string')
+        $table = $table->addColumn('title', 'string', ['limit' => 80])
             ->addColumn('user_id', 'integer')
             ->addColumn('slug', 'string', ["null" => true])
             ->addColumn('content', 'text')

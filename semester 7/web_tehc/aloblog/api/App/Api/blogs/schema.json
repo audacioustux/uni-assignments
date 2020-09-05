@@ -1,0 +1,20 @@
+{
+    "type": "object",
+    "properties": {
+        "title": {"type": "string", "minLength": 8, "maxLength": 80},
+        "content": {"type": "string", "minLength": 255, "maxLength": 8000},
+        "user_id": {"type": { "$ref": "#/definitions/idType" }},
+        "read_time": {"type": { "$ref": "#/definitions/integerType" }}
+    },
+    "required": ["title", "content", "user_id"],
+    "definitions" : {
+        "idType": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "integerType": {
+            "type": "integer",
+            "minimum": 0
+        }
+    }
+}

@@ -4,6 +4,10 @@ namespace App\Models;
 
 use App\Core\DBH;
 use App\Core\Enums\BlogStateEnum;
+use Latitude\QueryBuilder\Engine\MySqlEngine;
+use Latitude\QueryBuilder\QueryFactory;
+
+use function Latitude\QueryBuilder\field;
 
 class Blog
 {
@@ -36,7 +40,23 @@ class Blog
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function create(string $title, int $user_id, string $content, string $state) {
-        
+    public function create($values) {
+        $factory = new QueryFactory(new MySqlEngine());
+        $query = $factory->insert(self::TABLE, $values)->compile();
+
+        DBH::connect()
+        ->prepare($query->sql())
+        ->execute($query->params());
+    }
+
+    public function delete($id) {
+        $factory = new QueryFactory(new MySqlEngine());
+        $query = $factory->delete(self::TABLE)
+        ->where(field("id")->eq($id))
+        ->compile();
+
+        DBH::connect()
+        ->prepare($query->sql())
+        ->execute($query->params());
     }
 }

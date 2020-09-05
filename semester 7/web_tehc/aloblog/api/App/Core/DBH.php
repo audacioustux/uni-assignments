@@ -5,7 +5,7 @@ namespace App\Core;
 class DBH
 {
     private static $conn = null;
-
+    
     public static function connect()
     {
         if (is_null(self::$conn)) {

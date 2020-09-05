@@ -1,6 +1,5 @@
 <?php
 
-
 use Phinx\Seed\AbstractSeed;
 
 use App\Core\Helpers\Queries;

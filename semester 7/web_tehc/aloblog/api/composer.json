@@ -8,7 +8,9 @@
         "ramsey/uuid": "^4.1",
         "fzaninotto/faker": "^1.9",
         "cocur/slugify": "^4.0",
-        "robmorgan/phinx": "^0.12.4"
+        "robmorgan/phinx": "^0.12.4",
+        "latitude/latitude": "^4.2",
+        "justinrainbow/json-schema": "^5.2"
     },
     "authors": [
         {
