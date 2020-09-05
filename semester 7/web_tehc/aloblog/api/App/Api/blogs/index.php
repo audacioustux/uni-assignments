@@ -12,14 +12,12 @@ $blogCtx = new Blog();
 $_METHOD = $_SERVER['REQUEST_METHOD'];
 
 if($_METHOD === 'GET') {
-    $match = preg_match('/(?P<id>\d+)/', $_SERVER['REQUEST_URI'], $url_params);
-
-    if(isset($url_params["id"])){
+    if(preg_match('/blogs\/(?P<id>\d+)/', $_SERVER['REQUEST_URI'], $url_params)){
         $id = $url_params["id"];
 
         $blog = $blogCtx->get($id);
         echo json_encode(["data" => $blog]);
-    } elseif ($match) {
+    } elseif (preg_match('/blogs\/?$/', $_SERVER['REQUEST_URI'])) {
         $blogs = $blogCtx->get_all();
         echo json_encode(["data" => $blogs]);
     } else {
@@ -51,8 +49,7 @@ if($_METHOD === 'GET') {
         echo json_encode(["errors" => $errors]);
     }
 } elseif ($_METHOD === "DELETE") {
-    $match = preg_match('/(?P<id>\d+)/', $_SERVER['REQUEST_URI'], $url_params);
-    if(isset($url_params["id"])){
+    if(preg_match('/(?P<id>\d+)/', $_SERVER['REQUEST_URI'], $url_params)){
         $id = $url_params["id"];
         
         $blogCtx->delete($id);
