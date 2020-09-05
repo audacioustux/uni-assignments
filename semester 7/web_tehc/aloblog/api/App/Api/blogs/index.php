@@ -12,6 +12,7 @@ $blogCtx = new Blog();
 $_METHOD = $_SERVER['REQUEST_METHOD'];
 
 $status = 200;
+$body = "";
 
 if($_METHOD === 'GET') {
     $data = [];
@@ -22,7 +23,7 @@ if($_METHOD === 'GET') {
         $data = $blogCtx->get_all();
     }
     if(count($data)){
-        echo json_encode(["data" => $data]);
+        $body .= json_encode(["data" => $data]);
     } else {
         $status = 404;
     }
@@ -47,14 +48,14 @@ if($_METHOD === 'GET') {
             $errors[] = sprintf("[%s] %s", $error['property'], $error['message']);
         }
         $status = 422;
-        echo json_encode(["errors" => $errors]);
+        $body .= json_encode(["errors" => $errors]);
     }
 } elseif ($_METHOD === "DELETE") {
     if(preg_match('/(?P<id>\d+)/', $_SERVER['REQUEST_URI'], $url_params)){
         $id = $url_params["id"];
         
         $blogCtx->delete($id);
-        $status = 201;
+        $status = 202;
     } else {
         $status = 404;
     }
@@ -63,14 +64,22 @@ if($_METHOD === 'GET') {
 }
 
 http_response_code($status);
-if($status == 201){
-    echo json_encode(["ok" => "true"]);
-} elseif ($status == 404) {
-    echo json_encode(["error" => "Not Found"]);
-} elseif ($status == 422) {
-    echo json_encode(["error" => "Unprocessable Entity"]);
-} elseif ($status == 405) {
-    echo json_encode(["error" => "Method Not Allowed"]);
-} elseif ($status == 500) {
-    echo json_encode(["error" => "Internal Server Error"]);
+if($body === ""){
+    if($status == 200){
+        $body .= json_encode(["ok" => true]);
+    } elseif ($status == 201) {
+        $body .= json_encode(["created" => true]);
+    } elseif ($status == 202) {
+        $body .= json_encode(["accepted" => true]);
+    } elseif ($status == 404) {
+        $body .= json_encode(["error" => "Not Found"]);
+    } elseif ($status == 422) {
+        $body .= json_encode(["error" => "Unprocessable Entity"]);
+    } elseif ($status == 405) {
+        $body .= json_encode(["error" => "Method Not Allowed"]);
+    } elseif ($status == 500) {
+        $body .= json_encode(["error" => "Internal Server Error"]);
+    }
 }
+
+echo $body;
