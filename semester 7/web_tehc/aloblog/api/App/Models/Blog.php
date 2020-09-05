@@ -26,7 +26,7 @@ class Blog
 
         $stmt->execute();
         
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll();
     }
 
     public function get(int $id){
@@ -37,7 +37,7 @@ class Blog
         
         $stmt->execute();
         
-        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll();
     }
 
     public function create($values) {
