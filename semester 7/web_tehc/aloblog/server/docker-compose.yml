@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  db:
+    image: mysql
+    restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    env_file: .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+    ports:
+      - 3306:3306
+    networks:
+      - db_net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      - PMA_HOST=db
+    restart: unless-stopped
+    networks:
+      - db_net
+    ports:
+      - 8082:80
+
+networks:
+  db_net:
