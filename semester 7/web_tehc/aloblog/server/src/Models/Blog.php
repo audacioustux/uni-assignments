@@ -9,10 +9,12 @@ use Latitude\QueryBuilder\QueryFactory;
 
 use function Latitude\QueryBuilder\field;
 
-class Blog {
+class Blog
+{
     private const TABLE = 'blogs';
 
-    public function get_all(int $cursor = null, $limit = 10) {
+    public function get_all(int $cursor = null, $limit = 10)
+    {
         // TODO: refactor.. -_-
         $_q_where_cursor = $cursor ? 'id < ' . $cursor . ' AND' : '';
         $query = "SELECT * from %s WHERE {$_q_where_cursor} state = :state
@@ -28,7 +30,8 @@ class Blog {
         return $stmt->fetchAll();
     }
 
-    public function get(int $id) {
+    public function get(int $id)
+    {
         $query = "SELECT * from %s WHERE id = :id";
 
         $stmt = DBH::connect()->prepare(sprintf($query, self::TABLE));
@@ -39,7 +42,8 @@ class Blog {
         return $stmt->fetchAll();
     }
 
-    public function create($values) {
+    public function create($values)
+    {
         $factory = new QueryFactory(new MySqlEngine());
         $query = $factory->insert(self::TABLE, $values)->compile();
 
@@ -48,7 +52,8 @@ class Blog {
             ->execute($query->params());
     }
 
-    public function delete($id) {
+    public function delete($id)
+    {
         $factory = new QueryFactory(new MySqlEngine());
         $query = $factory
             ->delete(self::TABLE)

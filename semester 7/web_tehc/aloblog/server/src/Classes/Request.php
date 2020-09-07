@@ -4,14 +4,17 @@ namespace App\Classes;
 
 use App\Interfaces\IRequest;
 
-class Request implements IRequest {
-    public function __construct() {
+class Request implements IRequest
+{
+    public function __construct()
+    {
         foreach ($_SERVER as $key => $value) {
             $this->{$this->toCamelCase($key)} = $value;
         }
     }
 
-    private function toCamelCase($string) {
+    private function toCamelCase($string)
+    {
         $result = strtolower($string);
 
         preg_match_all('/_[a-z]/', $result, $matches);
@@ -24,22 +27,16 @@ class Request implements IRequest {
         return $result;
     }
 
-    public function getBody() {
+    public function getBody()
+    {
         if ($this->requestMethod === "GET") {
             return;
-        }
+        };
 
         if ($this->requestMethod === "POST") {
-            $body = [];
-            foreach ($_POST as $key => $_) {
-                $body[$key] = filter_input(
-                    INPUT_POST,
-                    $key,
-                    FILTER_SANITIZE_SPECIAL_CHARS,
-                );
+            if ($this->contentType === "application/json") {
+                return json_decode(file_get_contents('php://input'));
             }
-
-            return $body;
         }
     }
 }

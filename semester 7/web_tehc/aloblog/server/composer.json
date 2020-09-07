@@ -38,11 +38,6 @@
       "@db:provision",
       "@db:wait",
       "@db:populate"
-    ],
-    "format": "prettier . --write",
-    "format:watch": [
-      "Composer\\Config::disableProcessTimeout",
-      "onchange '**/*' -- prettier {{changed}} --write"
     ]
   }
 }
