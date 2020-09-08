@@ -2,16 +2,12 @@
 
 use App\Core\Router;
 use App\Classes\Request;
+use App\Classes\Response;
+use App\Controllers\BlogController;
 
-$router = new Router(new Request());
+$router = new Router(new Request(), new Response());
 
-$router->get('/blogs\/(?P<id>\d+)$/', function ($request) {
-    // The $request argument of the callback
-    // will contain information about the request
-    return "Content";
-}); // How POST requests will be defined
-$router->post('/some\/route/', function ($request) {
-    // How to get data from request body
-    $body = $request->getBody();
-    return json_encode($body);
-});
+// $router->get('/blogs\/(?<id>\d+)$/', function ($req, $res) {
+//     return json_encode($req->params);
+// });
+$router->post('/blogs/', &BlogController);

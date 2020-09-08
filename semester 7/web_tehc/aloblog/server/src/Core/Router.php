@@ -3,26 +3,29 @@
 namespace App\Core;
 
 use App\Interfaces\IRequest;
+use App\Interfaces\IResponse;
 
 class Router
 {
     private $request;
+    private $response;
     private $supportedHttpMethods = ["GET", "POST", "DELETE", "PUT", "PATCH"];
 
-    public function __construct(IRequest $request)
+    public function __construct(IRequest $request, IResponse $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
     public function __call($method, $args)
     {
-        list($path, $controller) = $args;
+        list($route, $controller) = $args;
 
         if (!in_array(strtoupper($method), $this->supportedHttpMethods)) {
             $this->invalidMethodHandler();
         }
 
-        $this->{strtolower($method)}[$path] = $controller;
+        $this->{strtolower($method)}[$route] = $controller;
     }
 
     private function invalidMethodHandler()
@@ -37,12 +40,19 @@ class Router
 
     public function resolve()
     {
-        $pathDictionary = $this->{strtolower($this->request->requestMethod)};
-        $formatedRoute = $this->request->requestUri;
+        $method = strtolower($this->request->requestMethod);
+        $routeDictionary = $this->{$method};
+        $path = parse_url($this->request->requestUri, PHP_URL_PATH);
 
-        foreach ($pathDictionary as $path => $controller) {
-            if (preg_match($path, $formatedRoute, $params)) {
-                echo call_user_func_array($controller, [$this->request]);
+        foreach ($routeDictionary as $route => $controller) {
+            if (preg_match($route, $path, $params)) {
+                foreach ($params as $key => $value) {
+                    $this->request->params[$key] = $value;
+                }
+                call_user_func_array(
+                    array($controller, $method),
+                    [$this->request, $this->response]
+                );
                 return;
             }
         }

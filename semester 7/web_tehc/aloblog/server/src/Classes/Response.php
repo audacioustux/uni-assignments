@@ -6,8 +6,16 @@ use App\Interfaces\IResponse;
 
 class Response implements IResponse
 {
-    public function json($value)
+    private $body;
+
+    public function json($raw_value)
     {
-        return $value;
+        header('Content-Type: application/json');
+        $this->body = json_encode($raw_value);
+    }
+
+    public function __destruct()
+    {
+        echo $this->body;
     }
 }

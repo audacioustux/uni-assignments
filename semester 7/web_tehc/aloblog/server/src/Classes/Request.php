@@ -11,6 +11,9 @@ class Request implements IRequest
         foreach ($_SERVER as $key => $value) {
             $this->{$this->toCamelCase($key)} = $value;
         }
+        foreach ($_GET as $key => $value) {
+            $this->params[$key] = $value;
+        }
     }
 
     private function toCamelCase($string)
