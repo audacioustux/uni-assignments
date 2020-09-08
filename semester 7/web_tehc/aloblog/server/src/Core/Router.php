@@ -19,15 +19,13 @@ class Router
 
     public function __call($method, $args)
     {
-        list($route, $controllerClass) = $args;
-
-        $controller = new $controllerClass();
+        list($route, $controllerClass, $controllerMethod) = $args;
 
         if (!in_array(strtoupper($method), $this->supportedHttpMethods)) {
             $this->invalidMethodHandler();
         }
 
-        $this->{strtolower($method)}[$route] = $controller;
+        $this->{strtolower($method)}[$route] = [$controllerClass, $controllerMethod];
     }
 
     private function invalidMethodHandler()
@@ -46,13 +44,18 @@ class Router
         $routeDictionary = $this->{$method};
         $path = parse_url($this->request->requestUri, PHP_URL_PATH);
 
-        foreach ($routeDictionary as $route => $controller) {
+        foreach ($routeDictionary as $route => list(
+            $controllerClass,
+            $controllerMethod
+        )) {
             if (preg_match($route, $path, $params)) {
+                $controller = new $controllerClass();
+
                 foreach ($params as $key => $value) {
                     $this->request->params[$key] = $value;
                 }
                 call_user_func_array(
-                    array($controller, $method),
+                    array($controller, $controllerMethod),
                     [$this->request, $this->response]
                 );
                 return;

@@ -15,12 +15,17 @@ class BlogController
         $this->blogCtx = new Blog();
     }
 
-    public function post($req, $res)
+    public function create($req, $res)
     {
         $body = $req->getBody();
         $res->json($body);
     }
+    public function index($req, $res)
+    {
+        $res->json($this->blogCtx->get_all_listed());
+    }
 }
+
 // $_METHOD = $_SERVER['REQUEST_METHOD'];
 
 // $status = 200;

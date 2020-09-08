@@ -7,7 +7,7 @@ use App\Controllers\BlogController;
 
 $router = new Router(new Request(), new Response());
 
-// $router->get('/blogs\/(?<id>\d+)$/', function ($req, $res) {
-//     return json_encode($req->params);
-// });
-$router->post('/blogs/', BlogController::class);
+$router->get('/blogs$/', BlogController::class, 'index');
+$router->get('/blogs\/(?<id>\d+)$/', BlogController::class, 'show');
+$router->post('/blogs/', BlogController::class, 'create');
+$router->delete('/blogs/', BlogController::class, 'delete');
