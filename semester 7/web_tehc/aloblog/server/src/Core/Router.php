@@ -28,6 +28,13 @@ class Router
         $this->{strtolower($method)}[$route] = [$controllerClass, $controllerMethod];
     }
 
+    public function resource(
+        $route,
+        $controllerClass,
+        $include = ['index', 'show', 'create', 'delete']
+    ) {
+    }
+
     private function invalidMethodHandler()
     {
         http_response_code(405);

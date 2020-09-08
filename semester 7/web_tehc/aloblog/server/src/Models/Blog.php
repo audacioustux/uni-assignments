@@ -18,24 +18,8 @@ class Blog
         $this->factory = new QueryFactory(new MySqlEngine());
     }
 
-    public function get_all_listed(int $cursor = null, $limit = 24, $order = "desc")
+    public function get_all_listed($cursor, int $limit, $order = "desc")
     {
-        // $state = BlogStateEnum::LISTED()->getValue();
-
-        // TODO: refactor.. -_-
-        // $_q_where_cursor = $cursor ? 'id < ' . $cursor . ' AND' : '';
-
-        // $query = "SELECT * from %s WHERE {$_q_where_cursor} state = :state
-        // ORDER BY id DESC
-        // LIMIT :limit";
-
-        // $stmt = DBH::connect()->prepare(sprintf($query, self::TABLE));
-        // $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
-        // $stmt->bindParam(':state', $state);
-
-        // $stmt->execute();
-
-        // return $stmt->fetchAll();
         $query = $this->factory
             ->select()
             ->from(self::TABLE)

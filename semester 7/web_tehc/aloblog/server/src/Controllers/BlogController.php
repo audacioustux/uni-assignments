@@ -22,7 +22,11 @@ class BlogController
     }
     public function index($req, $res)
     {
-        $res->json($this->blogCtx->get_all_listed());
+        $params = $req->params;
+
+        $cursor = @$params['cursor'];
+        $limit = @$params['limit'] ?? 24;
+        $res->json($this->blogCtx->get_all_listed($cursor, $limit));
     }
 }
 
