@@ -19,7 +19,9 @@ class Router
 
     public function __call($method, $args)
     {
-        list($route, $controller) = $args;
+        list($route, $controllerClass) = $args;
+
+        $controller = new $controllerClass();
 
         if (!in_array(strtoupper($method), $this->supportedHttpMethods)) {
             $this->invalidMethodHandler();

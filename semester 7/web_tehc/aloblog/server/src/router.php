@@ -10,4 +10,4 @@ $router = new Router(new Request(), new Response());
 // $router->get('/blogs\/(?<id>\d+)$/', function ($req, $res) {
 //     return json_encode($req->params);
 // });
-$router->post('/blogs/', &BlogController);
+$router->post('/blogs/', BlogController::class);
