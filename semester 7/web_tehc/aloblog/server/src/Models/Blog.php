@@ -18,7 +18,7 @@ class Blog
         $this->factory = new QueryFactory(new MySqlEngine());
     }
 
-    public function get_all_listed($cursor, int $limit, $order = "desc")
+    public function get_all_listed(?int $cursor, int $limit, $order = "desc")
     {
         $query = $this->factory
             ->select()
@@ -56,13 +56,13 @@ class Blog
 
     public function create($values)
     {
-        $query = $this->factory->insert(self::TABLE, $values)->compile();
+        $query = $this->factory->insert(self::TABLE, (array) $values)->compile();
 
         $stmt = DBH::connect()->prepare($query->sql());
-        $stmt->execute($query->params());
+        return $stmt->execute($query->params());
     }
 
-    public function delete($id)
+    public function delete(int $id)
     {
         $query = $this->factory
             ->delete(self::TABLE)
@@ -70,6 +70,6 @@ class Blog
             ->compile();
 
         $stmt = DBH::connect()->prepare($query->sql());
-        $stmt->execute($query->params());
+        return $stmt->execute($query->params());
     }
 }

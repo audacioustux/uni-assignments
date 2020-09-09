@@ -2,10 +2,12 @@
 
 namespace App\Core;
 
-class DBH {
+class DBH
+{
     private static $conn = null;
 
-    public static function connect() {
+    public static function connect()
+    {
         if (is_null(self::$conn)) {
             $user = getenv("DB_USER");
             $pass = getenv("DB_PASS");

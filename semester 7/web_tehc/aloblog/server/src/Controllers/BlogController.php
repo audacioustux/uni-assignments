@@ -14,14 +14,41 @@ class BlogController
     public function create($req, $res)
     {
         $body = $req->getBody();
-        $res->json($body);
+
+        $json = <<<'JSON'
+        {
+            "sdsd": 43
+        }
+        JSON;
+        // $validator = new \JsonSchema\Validator();
+
+        // $validator->validate(
+        //     $data,
+        //     (object) ['$ref' => 'file://' . realpath('BlogSchema.json')],
+        // );
+
+        // if ($validator->isValid()) {
+        //     $res->json($this->blogCtx->create($body));
+        // } else {
+        //     $errors = [];
+        //     foreach ($validator->getErrors() as $error) {
+        //         $errors[] = sprintf(
+        //             "[%s] %s",
+        //             $error['property'],
+        //             $error['message'],
+        //         );
+        //     }
+        // }
     }
+
     public function index($req, $res)
     {
         $params = $req->params;
 
         $cursor = @$params['cursor'];
         $limit = @$params['limit'] ?? 24;
-        $res->json($this->blogCtx->get_all_listed($cursor, $limit));
+
+        $blogs = $this->blogCtx->get_all_listed($cursor, $limit);
+        $res->json($blogs);
     }
 }
