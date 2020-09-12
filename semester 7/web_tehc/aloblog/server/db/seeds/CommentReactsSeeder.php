@@ -4,8 +4,14 @@ use Phinx\Seed\AbstractSeed;
 
 use App\Core\Helpers\QueryHelpers;
 
-class CommentReactsSeeder extends AbstractSeed {
-    public function run() {
+class CommentReactsSeeder extends AbstractSeed
+{
+    public function getDependencies()
+    {
+        return ['UserSeeder', 'CommentSeeder'];
+    }
+    public function run()
+    {
         $faker = Faker\Factory::create();
 
         $comment_ids = QueryHelpers::get_ids($this, "comments");
