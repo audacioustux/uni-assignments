@@ -15,30 +15,7 @@ class BlogController
     {
         $body = $req->getBody();
 
-        $json = <<<'JSON'
-        {
-            "sdsd": 43
-        }
-        JSON;
-        // $validator = new \JsonSchema\Validator();
-
-        // $validator->validate(
-        //     $data,
-        //     (object) ['$ref' => 'file://' . realpath('BlogSchema.json')],
-        // );
-
-        // if ($validator->isValid()) {
-        //     $res->json($this->blogCtx->create($body));
-        // } else {
-        //     $errors = [];
-        //     foreach ($validator->getErrors() as $error) {
-        //         $errors[] = sprintf(
-        //             "[%s] %s",
-        //             $error['property'],
-        //             $error['message'],
-        //         );
-        //     }
-        // }
+        $res->json($this->blogCtx->insert($body));
     }
 
     public function index($req, $res)

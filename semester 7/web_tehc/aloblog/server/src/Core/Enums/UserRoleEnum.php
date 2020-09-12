@@ -2,7 +2,7 @@
 
 namespace App\Core\Enums;
 
-use MyCLabs\Enum\Enum;
+use App\Core\Enums\Enum;
 
 class UserRoleEnum extends Enum
 {

@@ -2,25 +2,43 @@
 
 namespace App\Models;
 
+use App\Models\Model;
 use App\Core\DBH;
 use App\Core\Enums\BlogStateEnum;
-use Latitude\QueryBuilder\Engine\MySqlEngine;
-use Latitude\QueryBuilder\QueryFactory;
 
 use function Latitude\QueryBuilder\field;
 
-class Blog
+class Blog extends Model
 {
-    private const TABLE = 'blogs';
-
-    public function __construct()
+    const TABLE = 'blogs';
+    const SCHEMA = <<<'JSON'
     {
-        $this->factory = new QueryFactory(new MySqlEngine());
+        "title": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 128
+        },
+        "content": {
+            "type": "string",
+            "minLength": 255,
+            "maxLength": 65536
+        },
+        "user_id": {
+            "type": {
+                "$ref": "#/definitions/naturalInt"
+            }
+        },
+        "read_time": {
+            "type": {
+                "$ref": "#/definitions/wholeInt"
+            }
+        }
     }
+    JSON;
 
     public function get_all_listed(?int $cursor, int $limit, $order = "desc")
     {
-        $query = $this->factory
+        $query = self::QueryFactory()
             ->select()
             ->from(self::TABLE)
             ->where(field('state')
@@ -54,9 +72,17 @@ class Blog
         return $stmt->fetchAll();
     }
 
-    public function create($values)
+    public function insert(object $values)
     {
-        $query = $this->factory->insert(self::TABLE, (array) $values)->compile();
+        $changeset = $this->changeset($values)
+            ->required("content", "title", "read_time", "user_id")
+            ->validate();
+
+        if ($changeset->isValid() === false) {
+            return $changeset->getErrors();
+        }
+
+        $query = self::QueryFactory()->insert(self::TABLE, (array) $values)->compile();
 
         $stmt = DBH::connect()->prepare($query->sql());
         return $stmt->execute($query->params());
@@ -64,7 +90,7 @@ class Blog
 
     public function delete(int $id)
     {
-        $query = $this->factory
+        $query = self::QueryFactory()
             ->delete(self::TABLE)
             ->where(field("id")->eq($id))
             ->compile();

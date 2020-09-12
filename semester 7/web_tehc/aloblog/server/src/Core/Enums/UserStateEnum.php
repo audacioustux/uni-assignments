@@ -2,9 +2,10 @@
 
 namespace App\Core\Enums;
 
-use MyCLabs\Enum\Enum;
+use App\Core\Enums\Enum;
 
-class UserStateEnum extends Enum {
+class UserStateEnum extends Enum
+{
     private const BANNED = 'b';
     private const DELETED = 'd';
     private const ACTIVE = 'a';

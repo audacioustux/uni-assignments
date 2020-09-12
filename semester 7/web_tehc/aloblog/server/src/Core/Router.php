@@ -26,6 +26,8 @@ class Router
         }
 
         $this->{strtolower($method)}[$route] = [$controllerClass, $controllerMethod];
+
+        return $this;
     }
 
     // TODO: refactor routes with resource entry
