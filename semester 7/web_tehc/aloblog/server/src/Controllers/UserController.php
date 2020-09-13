@@ -2,24 +2,24 @@
 
 namespace App\Controllers;
 
-use App\Models\Blog;
+use App\Models\User;
 
-class BlogController
+class UserController
 {
     public function __construct()
     {
-        $this->blogCtx = new Blog();
+        $this->userCtx = new User();
     }
 
     public function create($req, $res)
     {
         $body = $req->getBody();
 
-        $res->json($this->blogCtx->insert($body));
+        $res->json($this->userCtx->insert($body));
     }
     public function delete($req, $res)
     {
-        $res->json($this->blogCtx->delete($req->params["id"]));
+        $res->json($this->userCtx->delete($req->params["id"]));
     }
     public function index($req, $res)
     {
@@ -28,15 +28,15 @@ class BlogController
         $cursor = @$params['cursor'];
         $limit = @$params['limit'] ?? 24;
 
-        $blogs = $this->blogCtx->get_all_listed($cursor, $limit);
-        $res->json($blogs);
+        $users = $this->userCtx->get_all_active($cursor, $limit);
+        $res->json($users);
     }
     public function show($req, $res)
     {
         $params = $req->params;
 
-        $blog = $this->blogCtx->get($params["id"]);
-        $res->json($blog);
+        $user = $this->userCtx->get($params["id"]);
+        $res->json($user);
     }
 
     public function update($req, $res)
@@ -44,7 +44,7 @@ class BlogController
         $params = $req->params;
         $body = $req->getBody();
 
-        $blog = $this->blogCtx->update($params["id"], $body);
-        $res->json($blog);
+        $user = $this->userCtx->update($params["id"], $body);
+        $res->json($user);
     }
 }

@@ -36,7 +36,7 @@ class Request implements IRequest
             return;
         };
 
-        if ($this->requestMethod === "POST") {
+        if (in_array($this->requestMethod, ["POST", "PATCH", "PUT"])) {
             if ($this->contentType === "application/json") {
                 return json_decode(file_get_contents('php://input'));
             }

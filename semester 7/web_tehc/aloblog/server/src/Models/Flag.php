@@ -4,45 +4,40 @@ namespace App\Models;
 
 use App\Models\Model;
 use App\Core\DBH;
-use App\Core\Enums\BlogStateEnum;
 
 use function Latitude\QueryBuilder\field;
 
-class Blog extends Model
+class Flag extends Model
 {
-    const TABLE = 'blogs';
+    const TABLE = 'flags';
     const SCHEMA = <<<'JSON'
     {
-        "title": {
-            "type": "string",
-            "minLength": 8,
-            "maxLength": 128
-        },
-        "content": {
-            "type": "string",
-            "minLength": 255,
-            "maxLength": 65536
-        },
         "user_id": {
             "type": {
                 "$ref": "#/definitions/naturalInt"
             }
         },
-        "read_time": {
+        "link": {
+            "type": "string",
+            "format": "uri"
+        },
+        "message": {
+            "type": "string",
+            "maxLength": 255
+        },
+        "flagType": {
             "type": {
-                "$ref": "#/definitions/wholeInt"
+                "$ref": "#/definitions/flagTypeEnum"
             }
         }
     }
     JSON;
 
-    public function get_all_listed(?int $cursor, int $limit, $order = "desc")
+    public function get_all(?int $cursor, int $limit, $order = "desc")
     {
         $query = self::QueryFactory()
             ->select()
             ->from(self::TABLE)
-            ->where(field('state')
-                ->eq(BlogStateEnum::LISTED()->getValue()))
             ->orderBy('id', $order)
             ->limit($limit);
 
@@ -62,13 +57,14 @@ class Blog extends Model
 
     public function get(int $id)
     {
-        // NOTE: for OBE... raw sql :)
-        $query = "SELECT * from %s WHERE id = :id";
+        $query = self::QueryFactory()
+            ->select()
+            ->from(self::TABLE)
+            ->where(field('id')->eq($id))
+            ->compile();
 
-        $stmt = DBH::connect()->prepare(sprintf($query, self::TABLE));
-        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
-
-        $stmt->execute();
+        $stmt = DBH::connect()->prepare($query->sql());
+        $stmt->execute($query->params());
 
         return $stmt->fetch();
     }
@@ -76,7 +72,7 @@ class Blog extends Model
     public function insert(object $values)
     {
         $changeset = $this->changeset($values)
-            ->required("content", "title", "read_time", "user_id")
+            ->required("name")
             ->validate();
 
         if ($changeset->isValid() === false) {
@@ -103,7 +99,8 @@ class Blog extends Model
     public function update(int $id, object $values)
     {
         // TODO: add cast
-        $changeset = $this->changeset($values)->validate();
+        $changeset = $this->changeset($values)
+            ->validate();
 
         if ($changeset->isValid() === false) {
             return $changeset->getErrors();

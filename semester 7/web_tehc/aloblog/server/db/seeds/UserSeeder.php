@@ -2,8 +2,10 @@
 
 use Phinx\Seed\AbstractSeed;
 
-class UserSeeder extends AbstractSeed {
-    public function run() {
+class UserSeeder extends AbstractSeed
+{
+    public function run()
+    {
         $faker = Faker\Factory::create();
 
         $data = [];
@@ -11,7 +13,7 @@ class UserSeeder extends AbstractSeed {
         for ($i = 0; $i < 5; $i++) {
             $data[] = [
                 'username' => $faker->username(),
-                'password' => password_hash(
+                'password_hash' => password_hash(
                     $faker->password(),
                     PASSWORD_DEFAULT,
                 ),

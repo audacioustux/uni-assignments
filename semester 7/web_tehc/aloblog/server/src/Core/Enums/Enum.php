@@ -14,7 +14,9 @@ abstract class Enum extends MyCLabsEnum
         return (object)  [
             $enumName => (object) [
                 "type" => "string",
-                "enum" => array_map('strtolower', self::keys())
+                // TODO: refactor
+                // "enum" => array_map('strtolower', self::keys())
+                "enum" => self::values()
             ]
         ];
     }

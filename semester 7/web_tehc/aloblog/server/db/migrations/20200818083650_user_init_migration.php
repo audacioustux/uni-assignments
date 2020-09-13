@@ -9,13 +9,15 @@ use Phinx\Migration\AbstractMigration;
 use App\Core\Enums\UserRoleEnum;
 use App\Core\Enums\UserStateEnum;
 
-final class UserInitMigration extends AbstractMigration {
-    public function change(): void {
+final class UserInitMigration extends AbstractMigration
+{
+    public function change(): void
+    {
         $table = $this->table('users');
         $table
             ->addColumn('username', 'string', ['limit' => 24])
             ->addColumn('avatar', 'uuid', ['null' => true])
-            ->addColumn('password', 'string')
+            ->addColumn('password_hash', 'string')
             ->addColumn('email', 'string')
             ->addColumn('role', 'char', [
                 'limit' => 1,
@@ -37,7 +39,7 @@ final class UserInitMigration extends AbstractMigration {
                 ->insert([
                     [
                         'username' => getenv('SUPERUSER_USERNAME'),
-                        'password' => password_hash(
+                        'password_hash' => password_hash(
                             getenv('SUPERUSER_PWD'),
                             PASSWORD_DEFAULT,
                         ),

@@ -20,7 +20,6 @@ class CommentReactsSeeder extends AbstractSeed
         $data = [];
 
         shuffle($comment_ids);
-
         for ($i = 0; $i < 15; $i++) {
             shuffle($user_ids);
             for ($j = 0; $j < $faker->numberBetween(0, 5); $j++) {

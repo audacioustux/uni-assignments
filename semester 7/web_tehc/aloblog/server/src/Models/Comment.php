@@ -8,41 +8,45 @@ use App\Core\Enums\BlogStateEnum;
 
 use function Latitude\QueryBuilder\field;
 
-class Blog extends Model
+class Comment extends Model
 {
-    const TABLE = 'blogs';
+    const TABLE = 'comments';
     const SCHEMA = <<<'JSON'
     {
-        "title": {
-            "type": "string",
-            "minLength": 8,
-            "maxLength": 128
-        },
-        "content": {
-            "type": "string",
-            "minLength": 255,
-            "maxLength": 65536
-        },
         "user_id": {
             "type": {
                 "$ref": "#/definitions/naturalInt"
             }
         },
-        "read_time": {
+        "blog_id": {
             "type": {
-                "$ref": "#/definitions/wholeInt"
+                "$ref": "#/definitions/naturalInt"
+            }
+        },
+        "content": {
+            "type": "string",
+            "maxLength": 65536
+        },
+        "replied_to": {
+            "type": {
+                "$ref": "#/definitions/naturalInt"
+            }
+        },
+        "state": {
+            "type": {
+                "$ref": "#/definitions/commentStateEnum"
             }
         }
     }
     JSON;
 
-    public function get_all_listed(?int $cursor, int $limit, $order = "desc")
+    public function get_all_by_blog(int $blog_id, ?int $cursor, int $limit, $order = "desc")
     {
         $query = self::QueryFactory()
             ->select()
             ->from(self::TABLE)
-            ->where(field('state')
-                ->eq(BlogStateEnum::LISTED()->getValue()))
+            ->where(field('blog_id')
+                ->eq($blog_id))
             ->orderBy('id', $order)
             ->limit($limit);
 
@@ -62,13 +66,14 @@ class Blog extends Model
 
     public function get(int $id)
     {
-        // NOTE: for OBE... raw sql :)
-        $query = "SELECT * from %s WHERE id = :id";
+        $query = self::QueryFactory()
+            ->select()
+            ->from(self::TABLE)
+            ->where(field('id')->eq($id))
+            ->compile();
 
-        $stmt = DBH::connect()->prepare(sprintf($query, self::TABLE));
-        $stmt->bindParam(':id', $id, \PDO::PARAM_INT);
-
-        $stmt->execute();
+        $stmt = DBH::connect()->prepare($query->sql());
+        $stmt->execute($query->params());
 
         return $stmt->fetch();
     }
@@ -76,7 +81,7 @@ class Blog extends Model
     public function insert(object $values)
     {
         $changeset = $this->changeset($values)
-            ->required("content", "title", "read_time", "user_id")
+            ->required("blog_id", "user_id", "content")
             ->validate();
 
         if ($changeset->isValid() === false) {
