@@ -11,5 +11,5 @@ $router
     ->get('/blogs$/', BlogController::class, 'index')
     ->get('/blogs\/(?<id>\d+)$/', BlogController::class, 'show')
     ->post('/blogs/', BlogController::class, 'create')
-    ->delete('/blogs/', BlogController::class, 'delete')
-    ->patch('/blogs/', BlogController::class, 'update');
+    ->delete('/blogs\/(?<id>\d+)$/', BlogController::class, 'delete')
+    ->patch('/blogs\/(?<id>\d+)$/', BlogController::class, 'update');

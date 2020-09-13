@@ -17,7 +17,10 @@ class BlogController
 
         $res->json($this->blogCtx->insert($body));
     }
-
+    public function delete($req, $res)
+    {
+        $this->blogCtx->delete($req->params["id"]);
+    }
     public function index($req, $res)
     {
         $params = $req->params;

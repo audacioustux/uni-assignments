@@ -19,17 +19,17 @@ class CommentReactsSeeder extends AbstractSeed
 
         $data = [];
 
-        for ($i = 0; $i < 5; $i++) {
-            $comment_id =
-                $comment_ids[$faker->numberBetween(0, count($comment_ids) - 1)];
-            $user_id =
-                $user_ids[$faker->numberBetween(0, count($user_ids) - 1)];
+        shuffle($comment_ids);
 
-            $data[] = [
-                "comment_id" => $comment_id,
-                "user_id" => $user_id,
-                "is_liked" => [true, false][$faker->numberBetween(0, 1)],
-            ];
+        for ($i = 0; $i < 15; $i++) {
+            shuffle($user_ids);
+            for ($j = 0; $j < $faker->numberBetween(0, 5); $j++) {
+                $data[] = [
+                    "comment_id" => $comment_ids[$i],
+                    "user_id" => $user_ids[$j],
+                    "is_liked" => [true, false][$faker->numberBetween(0, 1)],
+                ];
+            }
         }
 
         $this->table('comment_reacts')

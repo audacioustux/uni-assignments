@@ -19,17 +19,17 @@ class BlogReactsSeeder extends AbstractSeed
 
         $data = [];
 
-        for ($i = 0; $i < 5; $i++) {
-            $blog_id =
-                $blog_ids[$faker->numberBetween(0, count($blog_ids) - 1)];
-            $user_id =
-                $user_ids[$faker->numberBetween(0, count($user_ids) - 1)];
+        shuffle($blog_ids);
 
-            $data[] = [
-                "blog_id" => $blog_id,
-                "user_id" => $user_id,
-                "is_liked" => [true, false][$faker->numberBetween(0, 1)],
-            ];
+        for ($i = 0; $i < 15; $i++) {
+            shuffle($user_ids);
+            for ($j = 0; $j < $faker->numberBetween(0, 5); $j++) {
+                $data[] = [
+                    "blog_id" => $blog_ids[$i],
+                    "user_id" => $user_ids[$j],
+                    "is_liked" => [true, false][$faker->numberBetween(0, 1)],
+                ];
+            }
         }
 
         $this->table('blog_reacts')

@@ -24,7 +24,7 @@ class CommentSeeder extends AbstractSeed
         for ($i = 0; $i < 5; $i++) {
             $blog_id =
                 $blog_ids[$faker->numberBetween(0, count($blog_ids) - 1)];
-            for ($i = 0; $i < $faker->numberBetween(0, 5); $i++) {
+            for ($j = 0; $j < $faker->numberBetween(0, 5); $j++) {
                 $user_id =
                     $user_ids[$faker->numberBetween(0, count($user_ids) - 1)];
 

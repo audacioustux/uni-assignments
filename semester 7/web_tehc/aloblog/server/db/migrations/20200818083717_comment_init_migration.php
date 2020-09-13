@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 use Phinx\Migration\AbstractMigration;
 
-final class CommentInitMigration extends AbstractMigration {
-    public function change(): void {
+final class CommentInitMigration extends AbstractMigration
+{
+    public function change(): void
+    {
         $table = $this->table('comments');
         $table = $table
             ->addColumn('blog_id', 'integer')
@@ -18,7 +20,7 @@ final class CommentInitMigration extends AbstractMigration {
                 'delete' => 'CASCADE',
                 'update' => 'RESTRICT',
             ])
-            ->addForeignKey('blog_id', 'users', 'id', [
+            ->addForeignKey('blog_id', 'blogs', 'id', [
                 'delete' => 'CASCADE',
                 'update' => 'RESTRICT',
             ])

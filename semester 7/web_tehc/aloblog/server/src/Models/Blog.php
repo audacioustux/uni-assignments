@@ -62,6 +62,7 @@ class Blog extends Model
 
     public function get(int $id)
     {
+        // NOTE: for OBE... raw sql :)
         $query = "SELECT * from %s WHERE id = :id";
 
         $stmt = DBH::connect()->prepare(sprintf($query, self::TABLE));
