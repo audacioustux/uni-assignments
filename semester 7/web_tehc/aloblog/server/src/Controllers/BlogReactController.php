@@ -2,20 +2,27 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
+use App\Models\BlogReact;
 
-class UserController
+class BlogReactController
 {
     public function __construct()
     {
-        $this->userCtx = new User();
+        $this->blogReactCtx = new BlogReact();
     }
 
-    public function show($req, $res)
+    public function vote($req, $res)
+    {
+        $body = $req->getBody();
+
+        $react = $this->blogReactCtx->vote($body);
+        $res->json($react);
+    }
+
+    public function all($req, $res)
     {
         $params = $req->params;
 
-        $user = $this->userCtx->get($params["id"]);
-        $res->json($user);
+        $res->json($this->blogReactCtx->get_all_by_blog($params["blog_id"]));
     }
 }

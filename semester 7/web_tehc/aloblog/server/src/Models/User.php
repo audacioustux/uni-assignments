@@ -36,7 +36,7 @@ class User extends Model
     public function get_all_active(?int $cursor, int $limit, $order = "desc")
     {
         $query = self::QueryFactory()
-            ->select()
+            ->select('id', 'username', 'email', 'avatar', 'role')
             ->from(self::TABLE)
             ->where(field('state')
                 ->eq(UserStateEnum::ACTIVE()->getValue()))
@@ -55,20 +55,6 @@ class User extends Model
         $stmt->execute($query->params());
 
         return $stmt->fetchAll();
-    }
-
-    public function get(int $id)
-    {
-        $query = self::QueryFactory()
-            ->select()
-            ->from(self::TABLE)
-            ->where(field('id')->eq($id))
-            ->compile();
-
-        $stmt = DBH::connect()->prepare($query->sql());
-        $stmt->execute($query->params());
-
-        return $stmt->fetch();
     }
 
     public function insert(object $values)
@@ -129,5 +115,22 @@ class User extends Model
 
         $stmt = DBH::connect()->prepare($query->sql());
         return $stmt->execute($query->params());
+    }
+
+    public function get_user_by_field($name, $value, $with_password = false)
+    {
+        $fields = ['id', 'username', 'email', 'avatar', 'role', 'state'];
+        if ($with_password) array_push($fields, 'password_hash');
+
+        $query = self::QueryFactory()
+            ->select(...$fields)
+            ->from(self::TABLE)
+            ->where(field($name)->eq($value))
+            ->compile();
+
+        $stmt = DBH::connect()->prepare($query->sql());
+        $stmt->execute($query->params());
+
+        return $stmt->fetch();
     }
 }

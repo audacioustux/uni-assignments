@@ -10,7 +10,8 @@
     "cocur/slugify": "^4.0",
     "robmorgan/phinx": "^0.12.4",
     "latitude/latitude": "^4.2",
-    "justinrainbow/json-schema": "^5.2"
+    "justinrainbow/json-schema": "^5.2",
+    "vlucas/phpdotenv": "^5.1"
   },
   "authors": [
     {

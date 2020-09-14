@@ -16,7 +16,7 @@ final class FlagsInitMigration extends AbstractMigration
             ->addColumn('message', 'string')
             ->addColumn('flagType', 'char', [
                 'limit' => 1,
-                'default' => FlagTypeEnum::DRAFT()->getValue()
+                'default' => FlagTypeEnum::OTHER()->getValue()
             ])
             ->addTimestampsWithTimezone()
             ->addForeignKey('user_id', 'users', 'id', [

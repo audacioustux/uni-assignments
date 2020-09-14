@@ -35,7 +35,7 @@ class UserController
     {
         $params = $req->params;
 
-        $user = $this->userCtx->get($params["id"]);
+        $user = $this->userCtx->get_user_by_field("id", $params["id"]);
         $res->json($user);
     }
 

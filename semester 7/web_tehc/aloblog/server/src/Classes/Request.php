@@ -3,6 +3,7 @@
 namespace App\Classes;
 
 use App\Interfaces\IRequest;
+use App\Models\Session;
 
 class Request implements IRequest
 {
@@ -13,6 +14,9 @@ class Request implements IRequest
         }
         foreach ($_GET as $key => $value) {
             $this->params[$key] = $value;
+        }
+        if (isset($_COOKIE["sid"])) {
+            $this->user = (new Session)->get_user_by_sid($_COOKIE["sid"]);
         }
     }
 
