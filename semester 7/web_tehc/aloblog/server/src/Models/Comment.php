@@ -6,6 +6,7 @@ use App\Models\Model;
 use App\Core\DBH;
 use App\Core\Enums\BlogStateEnum;
 
+use function Latitude\QueryBuilder\func;
 use function Latitude\QueryBuilder\field;
 
 class Comment extends Model
@@ -121,5 +122,19 @@ class Comment extends Model
 
         $stmt = DBH::connect()->prepare($query->sql());
         return $stmt->execute($query->params());
+    }
+    public function count(int $blog_id)
+    {
+        $query = self::QueryFactory()
+            ->select(func('COUNT', '*'))
+            ->from(self::TABLE)
+            ->where(field('blog_id')
+                ->eq($blog_id))
+            ->compile();
+
+        $stmt = DBH::connect()->prepare($query->sql());
+        $stmt->execute($query->params());
+
+        return (int)$stmt->fetch()["COUNT(*)"];
     }
 }

@@ -5,7 +5,6 @@
 <script lang="ts">
 import "@/assets/scss/index.scss"
 import Home from "@/views/Home.vue"
-
 import { defineComponent } from "vue"
 
 export default defineComponent({

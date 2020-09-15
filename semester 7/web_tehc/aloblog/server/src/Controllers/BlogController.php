@@ -26,7 +26,7 @@ class BlogController
         $params = $req->params;
 
         $cursor = @$params['cursor'];
-        $limit = @$params['limit'] ?? 24;
+        $limit = @$params['limit'] ?? 16;
 
         $blogs = $this->blogCtx->get_all_listed($cursor, $limit);
         $res->json($blogs);

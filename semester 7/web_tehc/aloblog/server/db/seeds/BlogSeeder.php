@@ -26,7 +26,7 @@ class BlogSeeder extends AbstractSeed
             BlogStateEnum::NON_LISTED(),
         ];
 
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 0; $i < 256; $i++) {
             $content_len = $faker->numberBetween(512, 4096);
             $content = $faker->text($content_len);
             $read_time = ceil(str_word_count($content) / $word_per_minute);
@@ -34,7 +34,7 @@ class BlogSeeder extends AbstractSeed
             $state = $states[$faker->numberBetween(0, count($states) - 1)]->getValue();
 
             $data[] = [
-                'title' => $faker->sentence(6, true),
+                'title' => $faker->text(80),
                 'user_id' =>
                 $user_ids[$faker->numberBetween(0, count($user_ids) - 1)],
                 'content' => $content,

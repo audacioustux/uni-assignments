@@ -10,7 +10,7 @@ class UserSeeder extends AbstractSeed
 
         $data = [];
 
-        for ($i = 0; $i < 5; $i++) {
+        for ($i = 0; $i < 16; $i++) {
             $data[] = [
                 'username' => $faker->username(),
                 'password_hash' => password_hash(

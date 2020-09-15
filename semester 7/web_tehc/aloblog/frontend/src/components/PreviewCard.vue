@@ -2,16 +2,13 @@
   <article>
     <header>
       <h3 class="text-2xl white">
-        একগাদা লার্নিং রিসোর্স, কিছু র‍্যান্ডম, তিক্ত এবং সোলাইমানী কথাবার্তা
+        {{ title }}
       </h3>
     </header>
     <section class="content">
       <time class="text-sm">{{ date }}</time>
       <p class="text-sm">
-        ফার্স্ট সেমিস্টার থেকে ক্লাসমেট বা জুনিয়রদের ভার্সিটি সিলেবাসের বাইরে
-        কিছু শিখার জন্যে ঘুতাইতেছি। দুয়েকজন শুনতেছে যারা তাদের যতদূর সম্ভব হেল্প
-        করার চেষ্টা করি। ৮ বছর ধরে নিজে যে সেক্টরে কাজ করে আসতেছি সেখানে অন্যদের
-        আগ্রহ দেখতে ভালো লাগে আরকি।
+        {{ content }}
       </p>
     </section>
     <footer class="white text-sm">
@@ -20,12 +17,12 @@
           class="avatar inline"
           src="https://a.deviantart.net/avatars-big/f/e/felizias.png?4"
         />
-        <span class="green-500">u/</span>audacioustux
+        <span class="green-500">u/</span>{{ author.username }}
       </section>
       <section class="state">
         <ul>
-          <li>
-            <span>124</span>
+          <li v-if="numComments > 0">
+            <span>{{ numComments }}</span>
             <svg
               fill="currentColor"
               class="inline"
@@ -36,7 +33,7 @@
               <path :d="require('@mdi/js').mdiMessageSettingsOutline" />
             </svg>
           </li>
-          <li>
+          <!-- <li>
             <span>4</span>
             <svg
               fill="currentColor"
@@ -47,7 +44,7 @@
             >
               <path :d="require('@mdi/js').mdiHeartPlusOutline" />
             </svg>
-          </li>
+          </li> -->
         </ul>
       </section>
     </footer>
@@ -55,9 +52,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue"
+import { defineComponent, PropType } from "vue"
+
+interface Author {
+  avatar: string | null
+  username: string
+}
+
 export default defineComponent({
   name: "PreviewCard",
+  props: {
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    author: { type: Object as PropType<Author>, required: true },
+    numComments: { type: Number, required: true }
+    // numReacts: Number
+  },
   data() {
     return {
       date: new Date(Date.now()).toDateString()
@@ -76,6 +86,10 @@ article {
   cursor: pointer;
   box-shadow: 0 20px 25px -5px #292b2f0a, 0 10px 10px -5px #292b2faa;
   position: relative;
+  transition: box-shadow 0.2s;
+  &:hover {
+    box-shadow: 0 0 0 2px #a09379aa;
+  }
 }
 header {
   position: relative;
@@ -89,6 +103,7 @@ header {
   display: flex;
   flex-direction: column;
   background-size: cover;
+  // TODO: should be <img>
   background-image: linear-gradient(180deg, rgba(22, 26, 31, 0), #292b2f),
     url("https://audacioustux.com/img/map-of-computer-science.jpg");
 }

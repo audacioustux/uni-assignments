@@ -7,9 +7,11 @@ use App\Controllers\BlogController;
 use App\Controllers\BlogReactController;
 use App\Controllers\UserController;
 use App\Controllers\AuthController;
+use App\Controllers\CommentController;
 
 $router = new Router(new Request(), new Response());
 
+// users
 $router
     ->get('/users$/', UserController::class, 'index')
     ->get('/users\/(?<id>\d+)$/', UserController::class, 'show')
@@ -17,24 +19,31 @@ $router
     ->delete('/users\/(?<id>\d+)$/', UserController::class, 'delete')
     ->patch('/users\/(?<id>\d+)$/', UserController::class, 'update');
 
+// auth
 $router
     ->post('/login$/', AuthController::class, 'login')
     ->get('/logout$/', AuthController::class, 'logout');
 
+//blogs
 $router
     ->get('/blogs$/', BlogController::class, 'index')
     ->get('/blogs\/(?<id>\d+)$/', BlogController::class, 'show')
     ->post('/blogs/', BlogController::class, 'create')
     ->delete('/blogs\/(?<id>\d+)$/', BlogController::class, 'delete')
-    ->patch('/blogs\/(?<id>\d+)$/', BlogController::class, 'update')
-    ->put('/blogs\/vote$/', BlogReactController::class, 'vote')
-    ->get('/blogs\/(?<blog_id>\d+)\/votes$/', BlogReactController::class, 'all');
+    ->patch('/blogs\/(?<id>\d+)$/', BlogController::class, 'update');
 
+// comments
 $router
-    ->get('/comment$/', CommentController::class, 'index')
-    ->get('/comment\/(?<id>\d+)$/', CommentController::class, 'show')
-    ->post('/comment/', CommentController::class, 'create')
-    ->delete('/comment\/(?<id>\d+)$/', CommentController::class, 'delete')
-    ->patch('/comment\/(?<id>\d+)$/', CommentController::class, 'update')
-    ->put('/comment\/vote$/', CommentReactController::class, 'vote')
-    ->get('/comment\/(?<comment_id>\d+)\/votes$/', CommentReactController::class, 'all');
+    ->get('/blogs\/(?<blog_id>\d+)\/comments\/count$/', CommentController::class, 'count')
+    ->get('/blogs\/(?<blog_id>\d+)\/comments$/', CommentController::class, 'index')
+    ->get('/comments\/(?<id>\d+)$/', CommentController::class, 'show')
+    ->post('/comments/', CommentController::class, 'create')
+    ->delete('/comments\/(?<id>\d+)$/', CommentController::class, 'delete')
+    ->patch('/comments\/(?<id>\d+)$/', CommentController::class, 'update');
+
+// votes/reacts
+$router
+    ->put('/blogs\/votes$/', BlogReactController::class, 'vote')
+    ->get('/blogs\/(?<blog_id>\d+)\/votes$/', BlogReactController::class, 'all')
+    ->put('/comments\/votes$/', CommentReactController::class, 'vote')
+    ->get('/comments\/(?<comment_id>\d+)\/votes$/', CommentReactController::class, 'all');
