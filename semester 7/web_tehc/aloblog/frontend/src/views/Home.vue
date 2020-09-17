@@ -1,20 +1,10 @@
 <template>
-  <header class="flex bg-white">
-    <div class="left">
-      <SearchInput type="text" size="32" />
-    </div>
-    <div class="middle">
-      <Logo height="48" />
-    </div>
-    <div class="right">
-      <LoginButton />
-    </div>
-  </header>
   <section>
     <div class="grid">
       <PreviewCard
         v-for="blog in blogs"
         :key="blog.id"
+        :id="parseInt(blog.id)"
         :title="blog.title"
         :content="blog.content"
         :author="blog.author"
@@ -24,9 +14,6 @@
   </section>
 </template>
 <script lang="ts">
-import LoginButton from "@/components/LoginButton.vue"
-import Logo from "@/components/Logo.vue"
-import SearchInput from "@/components/SearchInput.vue"
 import PreviewCard from "@/components/PreviewCard.vue"
 import BlogDataService from "@/services/BlogDataService"
 import UserDataService from "@/services/UserDataService"
@@ -49,7 +36,7 @@ interface BlogRes {
 
 export default defineComponent({
   name: "Home",
-  components: { LoginButton, Logo, SearchInput, PreviewCard },
+  components: { PreviewCard },
   methods: {
     retriveBlogs() {
       BlogDataService.getAll(this.cursor).then(
@@ -70,6 +57,15 @@ export default defineComponent({
           console.log(this.cursor)
         }
       )
+    },
+    scroll() {
+      const bottomOfWindow =
+        document.documentElement.scrollTop + window.innerHeight ===
+        document.documentElement.offsetHeight
+
+      if (bottomOfWindow) {
+        this.retriveBlogs()
+      }
     }
   },
   data(): { cursor: number | null; blogs: Array<BlogRes> } {
@@ -80,35 +76,14 @@ export default defineComponent({
   },
   mounted() {
     this.retriveBlogs()
-    window.onscroll = () => {
-      const bottomOfWindow =
-        document.documentElement.scrollTop + window.innerHeight ===
-        document.documentElement.offsetHeight
-
-      if (bottomOfWindow) {
-        this.retriveBlogs()
-      }
-    }
+    window.addEventListener("scroll", this.scroll)
+  },
+  unmounted() {
+    window.removeEventListener("scroll", this.scroll)
   }
 })
 </script>
 <style lang="scss" scoped>
-header {
-  height: 48px;
-  border: 1px solid bottom;
-  background-color: #2f3136;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 15px;
-
-  margin-bottom: 24px;
-  .left,
-  .middle {
-    flex: 1;
-  }
-}
-
 section {
   --num-cards: 4;
   --cards-margin: 24px;

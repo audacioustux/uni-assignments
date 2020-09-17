@@ -80,7 +80,7 @@ class Blog extends Model
             ->validate();
 
         if ($changeset->isValid() === false) {
-            return $changeset->getErrors();
+            return ["errors" => $changeset->getErrors()];
         }
 
         $query = self::QueryFactory()->insert(self::TABLE, (array) $values)->compile();

@@ -15,7 +15,9 @@ class UserController
     {
         $body = $req->getBody();
 
-        $res->json($this->userCtx->insert($body));
+        $result = $this->userCtx->insert($body);
+        if (isset($result["errors"])) $res->status(422);
+        $res->json($result);
     }
     public function delete($req, $res)
     {

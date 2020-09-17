@@ -1,3 +1,11 @@
+## Henlo.. 
+```
+only focused on UI prototype
+no vuex,
+no vue 3 new feature used,
+shitty code
+too shitty to look at.. just don't
+```
 # frontend
 
 ## Project setup

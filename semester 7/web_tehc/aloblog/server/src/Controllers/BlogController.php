@@ -15,7 +15,9 @@ class BlogController
     {
         $body = $req->getBody();
 
-        $res->json($this->blogCtx->insert($body));
+        $result = $this->blogCtx->insert($body);
+        if (isset($result["errors"])) $res->status(422);
+        $res->json($result);
     }
     public function delete($req, $res)
     {
@@ -26,7 +28,7 @@ class BlogController
         $params = $req->params;
 
         $cursor = @$params['cursor'];
-        $limit = @$params['limit'] ?? 16;
+        $limit = @$params['limit'] ?? 12;
 
         $blogs = $this->blogCtx->get_all_listed($cursor, $limit);
         $res->json($blogs);

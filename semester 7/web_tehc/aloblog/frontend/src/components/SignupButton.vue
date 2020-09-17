@@ -1,16 +1,7 @@
 <template>
-  <router-link :to="{ name: 'Login' }">
+  <router-link :to="{ name: 'Signup' }">
     <button>
-      <svg
-        fill="currentColor"
-        class="inline mr-1"
-        viewBox="0 0 24 24"
-        width="18"
-        height="18"
-      >
-        <path :d="require('@mdi/js').mdiLogin" />
-      </svg>
-      <span class="text-sm">Login</span>
+      <span class="text-sm">Get Started</span>
     </button>
   </router-link>
 </template>
@@ -20,7 +11,7 @@ import { defineComponent } from "vue"
 // import Icon from "@/components/Icon.vue"
 
 export default defineComponent({
-  name: "LoginButton"
+  name: "SignupButton"
   // components: { Icon }
 })
 </script>
@@ -29,15 +20,18 @@ button {
   border-radius: 4px;
   height: 32px;
   padding: 0 16px;
-  color: #a09379;
+  color: #ffffff;
   font-weight: bold;
   font-family: "IBM Plex Mono", monospace;
   font-weight: 500;
+  background-image: linear-gradient(45deg, #3e5151, #a09379, #3e5151);
+  background-size: 200%;
+  background-position: 0 0;
+  transition: background ease-in-out 0.2s;
   display: flex;
   align-items: center;
-  transition: color 0.2s;
   &:hover {
-    color: #ffffff;
+    background-position: 100% 100%;
   }
 }
 </style>

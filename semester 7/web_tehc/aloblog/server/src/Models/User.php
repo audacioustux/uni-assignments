@@ -65,7 +65,7 @@ class User extends Model
             ->validate();
 
         if ($changeset->isValid() === false) {
-            return $changeset->getErrors();
+            return ["errors" => $changeset->getErrors()];
         }
 
         $values = $this->set_password($values);

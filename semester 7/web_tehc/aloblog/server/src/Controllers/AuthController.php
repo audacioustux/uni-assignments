@@ -24,12 +24,19 @@ class AuthController
             $user = $this->userCtx->get_user_by_field("username", $body->username, true);
         }
 
-        if (
+        if (!$user) {
+            $res->status(422);
+            $res->json((object)["errors" => [["property" => "username", "message" => "username not found"]]]);
+            return;
+        } elseif (
             !isset($body->password) ||
-            empty((array)$user) ||
-            !password_verify($body->password, $user["password_hash"])
+            !password_verify(
+                $body->password,
+                $user["password_hash"]
+            )
         ) {
-            $res->status(401);
+            $res->status(422);
+            $res->json((object)["errors" => [["property" => "password", "message" => "password didn't match"]]]);
             return;
         }
 

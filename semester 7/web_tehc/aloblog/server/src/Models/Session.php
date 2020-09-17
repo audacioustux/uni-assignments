@@ -49,10 +49,14 @@ class Session extends Model
         $stmt = DBH::connect()->prepare($query->sql());
         $stmt->execute($query->params());
 
-        $user_id = $stmt->fetch()["user_id"];
+        $user = $stmt->fetch();
 
-        // NOTE: yah i know.. this is shit :) 
-        // just wanna get done with this project ASAP :)
-        return (new user)->get_user_by_field("id", $user_id);
+        if ($user) {
+            $user_id = $user["user_id"];
+            // NOTE: yah i know.. this is shit :) 
+            // just wanna get done with this project ASAP :)
+            return (new user)->get_user_by_field("id", $user_id);
+        }
+        return null;
     }
 }

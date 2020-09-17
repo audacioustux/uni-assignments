@@ -1,7 +1,7 @@
 <template>
   <section>
     <header>
-      <h3>Login</h3>
+      <h3>Create an account</h3>
     </header>
     <div class="input-group">
       <label for="username">Username</label>
@@ -9,11 +9,28 @@
       <span v-for="(error, i) in errors['username']" :key="i">{{ error }}</span>
     </div>
     <div class="input-group">
+      <label for="email">Email</label>
+      <input v-model.trim="email" type="email" name="email" required />
+      <span v-for="(error, i) in errors['email']" :key="i">{{ error }}</span>
+    </div>
+    <div class="input-group">
       <label for="password">Password</label>
       <input v-model="password" type="password" name="password" required />
       <span v-for="(error, i) in errors['password']" :key="i">{{ error }}</span>
     </div>
-    <button class="submit" @click="submit">Login</button>
+    <div class="input-group">
+      <label for="pass_confirm">Password Confirmation</label>
+      <input
+        v-model="passwordConfirmation"
+        type="password"
+        name="password_confirmation"
+        required
+      />
+      <span v-for="(error, i) in errors['passwordConfirmation']" :key="i">{{
+        error
+      }}</span>
+    </div>
+    <button class="submit" @click="submit">Sign Up</button>
   </section>
 </template>
 
@@ -27,7 +44,9 @@ interface ErrorRes {
 }
 interface Data {
   username: string
+  email: string
   password: string
+  passwordConfirmation: string
 }
 export default defineComponent({
   name: "Signup",
@@ -37,15 +56,22 @@ export default defineComponent({
     return {
       errors: {},
       username: "",
-      password: ""
+      email: "",
+      password: "",
+      passwordConfirmation: ""
     }
   },
   methods: {
     submit() {
       this.errors = {}
-      const { username, password } = this
-
-      UserDataService.login({ username, password })
+      const { username, email, password, passwordConfirmation } = this
+      if (password !== passwordConfirmation) {
+        if (!this.errors.passwordConfirmation)
+          this.errors.passwordConfirmation = []
+        this.errors.passwordConfirmation.push("Passwords didn't match")
+        return
+      }
+      UserDataService.create({ username, email, password })
         .then(res => {
           console.log(res)
         })

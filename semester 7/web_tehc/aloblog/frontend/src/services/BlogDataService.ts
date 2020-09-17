@@ -1,6 +1,9 @@
 import axios from "@/common/axios"
 
 class BlogDataService {
+  get(id: number) {
+    return axios.get(`/blogs/${id}`)
+  }
   getAll(cursor: number | null) {
     return axios.get(`/blogs`, { params: { cursor } })
   }

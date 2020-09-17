@@ -1,39 +1,40 @@
 <template>
-  <article>
-    <header>
-      <h3 class="text-2xl white">
-        {{ title }}
-      </h3>
-    </header>
-    <section class="content">
-      <time class="text-sm">{{ date }}</time>
-      <p class="text-sm">
-        {{ content }}
-      </p>
-    </section>
-    <footer class="white text-sm">
-      <section class="author">
-        <img
-          class="avatar inline"
-          src="https://a.deviantart.net/avatars-big/f/e/felizias.png?4"
-        />
-        <span class="green-500">u/</span>{{ author.username }}
+  <router-link :to="link">
+    <article>
+      <header>
+        <h3 class="white">
+          {{ title }}
+        </h3>
+      </header>
+      <section class="content">
+        <time class="text-sm">{{ date }}</time>
+        <p class="text-sm">
+          {{ content }}
+        </p>
       </section>
-      <section class="state">
-        <ul>
-          <li v-if="numComments > 0">
-            <span>{{ numComments }}</span>
-            <svg
-              fill="currentColor"
-              class="inline"
-              viewBox="0 0 24 24"
-              width="18"
-              height="18"
-            >
-              <path :d="require('@mdi/js').mdiMessageSettingsOutline" />
-            </svg>
-          </li>
-          <!-- <li>
+      <footer class="white text-sm">
+        <section class="author">
+          <img
+            class="avatar inline"
+            src="https://a.deviantart.net/avatars-big/f/e/felizias.png?4"
+          />
+          <span class="green-500">u/</span>{{ author.username }}
+        </section>
+        <section class="state">
+          <ul>
+            <li v-if="numComments > 0">
+              <span>{{ numComments }}</span>
+              <svg
+                fill="currentColor"
+                class="inline"
+                viewBox="0 0 24 24"
+                width="18"
+                height="18"
+              >
+                <path :d="require('@mdi/js').mdiMessageSettingsOutline" />
+              </svg>
+            </li>
+            <!-- <li>
             <span>4</span>
             <svg
               fill="currentColor"
@@ -45,10 +46,11 @@
               <path :d="require('@mdi/js').mdiHeartPlusOutline" />
             </svg>
           </li> -->
-        </ul>
-      </section>
-    </footer>
-  </article>
+          </ul>
+        </section>
+      </footer>
+    </article>
+  </router-link>
 </template>
 
 <script lang="ts">
@@ -62,11 +64,17 @@ interface Author {
 export default defineComponent({
   name: "PreviewCard",
   props: {
+    id: { type: Number, required: true },
     title: { type: String, required: true },
     content: { type: String, required: true },
     author: { type: Object as PropType<Author>, required: true },
     numComments: { type: Number, required: true }
     // numReacts: Number
+  },
+  computed: {
+    link(): { name: string; params: { blogId: number } } {
+      return { name: "Blog", params: { blogId: this.id } }
+    }
   },
   data() {
     return {
@@ -106,6 +114,13 @@ header {
   // TODO: should be <img>
   background-image: linear-gradient(180deg, rgba(22, 26, 31, 0), #292b2f),
     url("https://audacioustux.com/img/map-of-computer-science.jpg");
+  h3 {
+    overflow: hidden;
+    font-size: 21px;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+  }
 }
 time {
   margin: 1rem 0;
