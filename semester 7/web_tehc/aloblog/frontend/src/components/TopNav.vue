@@ -4,11 +4,14 @@
       <SearchInput type="text" size="32" />
     </div>
     <div class="middle">
-      <Logo height="48" />
+      <router-link :to="{ name: 'Home' }">
+        <Logo height="48" />
+      </router-link>
     </div>
     <div class="right">
-      <LoginButton />
-      <SignupButton />
+      <LoginButton v-if="!isLoggedIn" />
+      <SignupButton v-if="!isLoggedIn" />
+      <LogoutButton v-if="isLoggedIn" />
     </div>
   </header>
 </template>
@@ -18,10 +21,16 @@ import SignupButton from "@/components/SignupButton.vue"
 import Logo from "@/components/Logo.vue"
 import SearchInput from "@/components/SearchInput.vue"
 import { defineComponent } from "vue"
+// import UserDataService from "@/services/UserDataService"
+import LogoutButton from "@/components/LogoutButton.vue"
+import store from "@/store/reactiveStore"
 
 export default defineComponent({
   name: "TopNav",
-  components: { LoginButton, Logo, SearchInput, SignupButton }
+  components: { LogoutButton, LoginButton, Logo, SearchInput, SignupButton },
+  data() {
+    return store.state
+  }
 })
 </script>
 <style lang="scss" scoped>

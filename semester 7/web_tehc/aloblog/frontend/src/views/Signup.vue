@@ -37,6 +37,7 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import UserDataService from "@/services/UserDataService"
+import store from "@/store/reactiveStore.ts"
 
 interface ErrorRes {
   property: keyof Data
@@ -47,6 +48,8 @@ interface Data {
   email: string
   password: string
   passwordConfirmation: string
+  // eslint-disable-next-line
+  sharedStore: any
 }
 export default defineComponent({
   name: "Signup",
@@ -58,7 +61,8 @@ export default defineComponent({
       username: "",
       email: "",
       password: "",
-      passwordConfirmation: ""
+      passwordConfirmation: "",
+      sharedStore: store.state
     }
   },
   methods: {
@@ -72,8 +76,11 @@ export default defineComponent({
         return
       }
       UserDataService.create({ username, email, password })
-        .then(res => {
-          console.log(res)
+        .then(() => {
+          UserDataService.login({ username, password }).then(() => {
+            store.setLogged()
+            this.$router.push("/")
+          })
         })
         .catch(
           ({

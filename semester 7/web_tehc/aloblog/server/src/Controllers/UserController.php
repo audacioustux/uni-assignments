@@ -49,4 +49,8 @@ class UserController
         $user = $this->userCtx->update($params["id"], $body);
         $res->json($user);
     }
+    public function whoami($req, $res)
+    {
+        $res->json($req->user);
+    }
 }

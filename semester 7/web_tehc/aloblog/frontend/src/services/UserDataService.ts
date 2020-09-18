@@ -19,6 +19,12 @@ class UserDataService {
   login(creds: Credential) {
     return axios.post("/login", creds)
   }
+  logout() {
+    return axios.get("/logout")
+  }
+  whoami() {
+    return axios.get("/whoami")
+  }
 }
 
 export default new UserDataService()

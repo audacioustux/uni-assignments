@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Model;
 use App\Core\DBH;
 use App\Core\Enums\UserStateEnum;
+use PDOException;
 
 use function Latitude\QueryBuilder\field;
 
@@ -73,7 +74,19 @@ class User extends Model
         $query = self::QueryFactory()->insert(self::TABLE, (array) $values)->compile();
 
         $stmt = DBH::connect()->prepare($query->sql());
-        return $stmt->execute($query->params());
+
+        try {
+            return $stmt->execute($query->params());
+        } catch (PDOException $e) {
+            if ($e->getCode() === '23000') {
+                if (preg_match("/key 'users.(?P<field>.+)'/", $e->getMessage(), $match)) {
+                    return ["errors" => [[
+                        'property' => $match["field"],
+                        'message' => sprintf("%s already exists", $match["field"])
+                    ]]];
+                }
+            }
+        }
     }
 
     private function set_password($values)

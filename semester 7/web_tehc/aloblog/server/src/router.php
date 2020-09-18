@@ -17,7 +17,8 @@ $router
     ->get('/users\/(?<id>\d+)$/', UserController::class, 'show')
     ->post('/users/', UserController::class, 'create')
     ->delete('/users\/(?<id>\d+)$/', UserController::class, 'delete')
-    ->patch('/users\/(?<id>\d+)$/', UserController::class, 'update');
+    ->patch('/users\/(?<id>\d+)$/', UserController::class, 'update')
+    ->get('/whoami$/', UserController::class, 'whoami');
 
 // auth
 $router

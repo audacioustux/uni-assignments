@@ -1,7 +1,7 @@
 <template>
   <section>
     <header>
-      <h3 class="title">Preloading your PHP 7.4 project in one line</h3>
+      <h3 class="title">{{ blog.title }}</h3>
       <ul class="meta">
         <li class="date">{{ blog.created_at }}</li>
         <li v-if="blog.read_time">{{ blog.read_time }} minute read</li>
@@ -42,7 +42,6 @@ export default defineComponent({
     this.fetchData()
   },
   watch: {
-    // call again the method if the route changes
     $route: "fetchData"
   },
   computed: {
@@ -56,9 +55,7 @@ export default defineComponent({
   methods: {
     async fetchData() {
       const fetchedId = parseInt(this.$route.params.blogId as string)
-      // replace `getPost` with your data fetching util / API wrapper
       const { data: blog } = await BlogDataService.get(fetchedId)
-      console.log(blog)
       this.blog = blog
     }
   }

@@ -114,6 +114,12 @@ svg {
   background-color: #202225;
   padding: 5px;
   transform: translateY(24px);
+  transition: border 0.2s;
+  box-shadow: 0 20px 25px -5px #292b2f0a, 0 10px 10px -5px #292b2faa;
+  transition: box-shadow 0.2s;
+  &:hover {
+    box-shadow: 0 0 0 2px #a09379aa;
+  }
 }
 g {
   stroke: white;

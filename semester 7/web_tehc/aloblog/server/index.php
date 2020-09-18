@@ -1,4 +1,7 @@
 <?php
+ini_set("session.cookie_secure", 1);
+session_start();
+
 // Allow from any origin
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one

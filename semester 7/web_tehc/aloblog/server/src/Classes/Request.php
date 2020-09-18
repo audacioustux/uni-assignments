@@ -17,6 +17,8 @@ class Request implements IRequest
         }
         if (isset($_COOKIE["sid"])) {
             $this->user = (new Session)->get_user_by_sid($_COOKIE["sid"]);
+        } else {
+            $this->user = null;
         }
     }
 

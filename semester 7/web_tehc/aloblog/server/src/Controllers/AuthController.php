@@ -41,7 +41,7 @@ class AuthController
         }
 
         $sid = $this->sessionCtx->create($user["id"]);
-        setcookie("sid", $sid);
+        setcookie("sid", $sid, ['samesite' => 'Lax']);
         unset($user["password_hash"]);
         $res->json($user);
     }

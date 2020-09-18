@@ -7,16 +7,10 @@
 import "@/assets/scss/index.scss"
 import TopNav from "@/components/TopNav.vue"
 import { defineComponent } from "vue"
-import Cookies from "js-cookie"
 
 export default defineComponent({
   name: "App",
-  components: { TopNav },
-  methods: {
-    sds() {
-      store.commit("increment")
-    }
-  }
+  components: { TopNav }
 })
 </script>
 
