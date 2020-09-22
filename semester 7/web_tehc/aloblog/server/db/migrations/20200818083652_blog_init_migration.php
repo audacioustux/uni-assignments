@@ -33,5 +33,7 @@ final class BlogInitMigration extends AbstractMigration
             ->addTimestampsWithTimezone()
             ->addIndex("user_id")
             ->create();
+
+        $this->execute('CREATE FULLTEXT INDEX blog_text ON blogs(title, content)');
     }
 }

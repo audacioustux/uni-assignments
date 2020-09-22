@@ -15,6 +15,13 @@ export default defineComponent({
 </script>
 
 <style>
+html {
+  scrollbar-width: thin;
+}
+pre,
+code {
+  overflow: scroll;
+}
 body {
   background-color: #36393f;
   font-family: "IBM Plex Mono", monospace;

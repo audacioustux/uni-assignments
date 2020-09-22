@@ -1,16 +1,7 @@
 <template>
-  <router-link :to="{ name: 'Logout' }">
+  <router-link :to="{ name: 'Editor' }">
     <button>
-      <svg
-        fill="currentColor"
-        class="inline mr-1"
-        viewBox="0 0 24 24"
-        width="18"
-        height="18"
-      >
-        <path :d="require('@mdi/js').mdiLogout" />
-      </svg>
-      <!-- <span class="text-sm">Log Out</span> -->
+      <span class="text-sm">Write ~!</span>
     </button>
   </router-link>
 </template>
@@ -20,7 +11,7 @@ import { defineComponent } from "vue"
 // import Icon from "@/components/Icon.vue"
 
 export default defineComponent({
-  name: "LogoutButton"
+  name: "WriteButton"
   // components: { Icon }
 })
 </script>
@@ -29,15 +20,18 @@ button {
   border-radius: 4px;
   height: 32px;
   padding: 0 16px;
-  color: #a09379;
+  color: #ffffff;
   font-weight: bold;
   font-family: "IBM Plex Mono", monospace;
   font-weight: 500;
+  background-image: linear-gradient(45deg, #49bc79, #00e59b, #49bc79);
+  background-size: 200%;
+  background-position: 0 0;
+  transition: background ease-in-out 0.2s;
   display: flex;
   align-items: center;
-  transition: color 0.2s;
   &:hover {
-    color: #ffffff;
+    background-position: 100% 100%;
   }
 }
 </style>

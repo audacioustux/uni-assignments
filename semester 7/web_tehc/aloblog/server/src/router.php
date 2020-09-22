@@ -9,6 +9,7 @@ use App\Controllers\UserController;
 use App\Controllers\AuthController;
 use App\Controllers\CommentController;
 
+
 $router = new Router(new Request(), new Response());
 
 // users
@@ -29,10 +30,10 @@ $router
 $router
     ->get('/blogs$/', BlogController::class, 'index')
     ->get('/blogs\/(?<id>\d+)$/', BlogController::class, 'show')
-    ->post('/blogs/', BlogController::class, 'create')
+    ->post('/blogs$/', BlogController::class, 'create')
     ->delete('/blogs\/(?<id>\d+)$/', BlogController::class, 'delete')
-    ->patch('/blogs\/(?<id>\d+)$/', BlogController::class, 'update');
-
+    ->patch('/blogs\/(?<id>\d+)$/', BlogController::class, 'update')
+    ->post('/blogs\/upload-thumb$/', BlogController::class, 'upthumb');
 // comments
 $router
     ->get('/blogs\/(?<blog_id>\d+)\/comments\/count$/', CommentController::class, 'count')

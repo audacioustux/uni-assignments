@@ -3,6 +3,7 @@ import Home from "@/views/Home.vue"
 import Blog from "@/views/Blog.vue"
 import Signup from "@/views/Signup.vue"
 import Login from "@/views/Login.vue"
+import Editor from "@/views/Editor.vue"
 import UserDataService from "@/services/UserDataService"
 import store from "@/store/reactiveStore"
 
@@ -19,7 +20,8 @@ const routes: Array<RouteRecordRaw> = [
       store.setLoggedOut()
       return "/"
     }
-  }
+  },
+  { path: "/editor", name: "Editor", component: Editor }
 ]
 
 const router = createRouter({

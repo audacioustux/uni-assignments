@@ -9,14 +9,14 @@
         :content="blog.content"
         :author="blog.author"
         :numComments="blog.numComments"
+        :thumbnail="blog.thumbnail"
       />
     </div>
   </section>
 </template>
 <script lang="ts">
 import PreviewCard from "@/components/PreviewCard.vue"
-import BlogDataService from "@/services/BlogDataService"
-import UserDataService from "@/services/UserDataService"
+import sharedState from "@/store/reactiveStore"
 
 import { defineComponent } from "vue"
 
@@ -30,6 +30,7 @@ interface BlogRes {
   title: string
   content: string
   user_id: number
+  thumbnail: string | null
   numComments: number
   author: User
 }
@@ -38,44 +39,22 @@ export default defineComponent({
   name: "Home",
   components: { PreviewCard },
   methods: {
-    retriveBlogs() {
-      BlogDataService.getAll(this.cursor).then(
-        async ({ data: blogs }: { data: Array<BlogRes> }) => {
-          await Promise.all(
-            blogs.map(async (blog: BlogRes) => {
-              const userId = blog.user_id
-              const { data: author } = await UserDataService.get(userId)
-              const { data: numComments } = await BlogDataService.commentCount(
-                userId
-              )
-              blog.author = author
-              blog.numComments = numComments
-            })
-          )
-          this.blogs = [...this.blogs, ...blogs]
-          this.cursor = blogs[blogs.length - 1].id
-          console.log(this.cursor)
-        }
-      )
-    },
     scroll() {
       const bottomOfWindow =
         document.documentElement.scrollTop + window.innerHeight ===
         document.documentElement.offsetHeight
 
       if (bottomOfWindow) {
-        this.retriveBlogs()
+        sharedState.retriveBlogs()
       }
+      console.log("paginate")
     }
   },
-  data(): { cursor: number | null; blogs: Array<BlogRes> } {
-    return {
-      cursor: null,
-      blogs: []
-    }
+  data() {
+    return sharedState.state
   },
   mounted() {
-    this.retriveBlogs()
+    sharedState.retriveBlogs()
     window.addEventListener("scroll", this.scroll)
   },
   unmounted() {
@@ -87,7 +66,7 @@ export default defineComponent({
 section {
   --num-cards: 4;
   --cards-margin: 24px;
-  padding: 30px 30px;
+  padding: 54px 30px;
   display: grid;
   .grid {
     display: grid;

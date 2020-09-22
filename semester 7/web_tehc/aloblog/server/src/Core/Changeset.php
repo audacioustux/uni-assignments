@@ -10,11 +10,11 @@ class Changeset
     {
         "wholeInt": {
             "type": "integer",
-            "minimum": 0
+            "minimum": -1
         },
         "naturalInt": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 0
         }
     }
     JSON;

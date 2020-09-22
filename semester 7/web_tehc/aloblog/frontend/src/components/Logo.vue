@@ -110,6 +110,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 svg {
+  cursor: pointer;
   border-radius: 100%;
   background-color: #202225;
   padding: 5px;

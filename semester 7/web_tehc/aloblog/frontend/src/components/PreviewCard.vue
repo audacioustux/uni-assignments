@@ -1,7 +1,7 @@
 <template>
   <router-link :to="link">
     <article>
-      <header>
+      <header :style="thumbnailStyle">
         <h3 class="white">
           {{ title }}
         </h3>
@@ -16,7 +16,7 @@
         <section class="author">
           <img
             class="avatar inline"
-            src="https://a.deviantart.net/avatars-big/f/e/felizias.png?4"
+            :src="`https://picsum.photos/seed/${id}/200`"
           />
           <span class="green-500">u/</span>{{ author.username }}
         </section>
@@ -34,18 +34,6 @@
                 <path :d="require('@mdi/js').mdiMessageSettingsOutline" />
               </svg>
             </li>
-            <!-- <li>
-            <span>4</span>
-            <svg
-              fill="currentColor"
-              class="inline"
-              viewBox="0 0 24 24"
-              width="18"
-              height="18"
-            >
-              <path :d="require('@mdi/js').mdiHeartPlusOutline" />
-            </svg>
-          </li> -->
           </ul>
         </section>
       </footer>
@@ -65,6 +53,7 @@ export default defineComponent({
   name: "PreviewCard",
   props: {
     id: { type: Number, required: true },
+    thumbnail: { type: String },
     title: { type: String, required: true },
     content: { type: String, required: true },
     author: { type: Object as PropType<Author>, required: true },
@@ -72,6 +61,14 @@ export default defineComponent({
     // numReacts: Number
   },
   computed: {
+    thumbnailStyle(): { backgroundImage: string } | null {
+      if (this.thumbnail) {
+        return {
+          backgroundImage: `url('http://localhost:8080/uploads/img/thumbnails/${this.thumbnail}')`
+        }
+      }
+      return null
+    },
     link(): { name: string; params: { blogId: number } } {
       return { name: "Blog", params: { blogId: this.id } }
     }
@@ -111,15 +108,22 @@ header {
   display: flex;
   flex-direction: column;
   background-size: cover;
-  // TODO: should be <img>
-  background-image: linear-gradient(180deg, rgba(22, 26, 31, 0), #292b2f),
-    url("https://audacioustux.com/img/map-of-computer-science.jpg");
+  &::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-image: linear-gradient(180deg, rgba(22, 26, 31, 0), #292b2f);
+  }
   h3 {
     overflow: hidden;
     font-size: 21px;
     display: -webkit-box;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
+    position: relative;
   }
 }
 time {
@@ -128,6 +132,7 @@ time {
 }
 section.content {
   padding: 0 1rem;
+  overflow-wrap: anywhere;
 }
 section.author {
   .avatar {

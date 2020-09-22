@@ -5,14 +5,14 @@
       <ul class="meta">
         <li class="date">{{ blog.created_at }}</li>
         <li v-if="blog.read_time">{{ blog.read_time }} minute read</li>
-        <li>rust</li>
-        <li>c</li>
-        <li>memory</li>
+        <!-- <li>#rust</li>
+        <li>#c</li> -->
       </ul>
     </header>
     <img
+      v-if="blog.thumbnail"
       class="featured"
-      src="https://audacioustux.com/img/map-of-computer-science.jpg"
+      :src="`http://localhost:8080/uploads/img/thumbnails/${blog.thumbnail}`"
     />
     <div class="content" v-html="compiledMarkdown"></div>
   </section>
@@ -47,7 +47,7 @@ export default defineComponent({
   computed: {
     compiledMarkdown(): string {
       if (this.blog) {
-        return marked(this.blog.content, { sanitize: true })
+        return marked(this.blog.content)
       }
       return ""
     }
@@ -96,7 +96,14 @@ img.featured {
 }
 .content {
   font-family: "Source Serif Pro", serif;
-  line-height: 1.8em;
-  font-size: 1.4rem;
+  line-height: 1.7;
+  font-size: 1.2rem;
+
+  & > ul {
+    list-style: disc;
+    margin-left: 12px;
+    padding: 15px;
+    color: black;
+  }
 }
 </style>

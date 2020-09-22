@@ -1,11 +1,18 @@
 <template>
-  <input placeholder="[Search] press [/] to focus" />
+  <input placeholder="[Search] ..." @change="search" />
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from "vue"
+import sharedState from "@/store/reactiveStore"
+
 export default defineComponent({
-  name: "SearchInput"
+  name: "SearchInput",
+  methods: {
+    search(e) {
+      sharedState.search(e.target.value)
+    }
+  }
 })
 </script>
 <style lang="scss" scoped>

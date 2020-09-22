@@ -6,7 +6,12 @@ use App\Models\Model;
 use App\Core\DBH;
 use App\Core\Enums\BlogStateEnum;
 
+use function Latitude\QueryBuilder\express;
 use function Latitude\QueryBuilder\field;
+use function Latitude\QueryBuilder\param;
+use function Latitude\QueryBuilder\func;
+use function Latitude\QueryBuilder\criteria;
+use function Latitude\QueryBuilder\literal;
 
 class Blog extends Model
 {
@@ -23,20 +28,24 @@ class Blog extends Model
             "minLength": 255,
             "maxLength": 65536
         },
+        "thumbnail": {
+            "type": "string",
+            "format": "uuid"
+        },
+        "state":{
+            "type": {
+                "$ref": "#/definitions/blogStateEnum"
+            }
+        },
         "user_id": {
             "type": {
                 "$ref": "#/definitions/naturalInt"
-            }
-        },
-        "read_time": {
-            "type": {
-                "$ref": "#/definitions/wholeInt"
             }
         }
     }
     JSON;
 
-    public function get_all_listed(?int $cursor, int $limit, $order = "desc")
+    public function get_all_listed(?int $cursor, int $limit, string $order, ?string $q)
     {
         $query = self::QueryFactory()
             ->select()
@@ -51,9 +60,9 @@ class Blog extends Model
                 ? $query->where(field('id')->lt($cursor))
                 : $query->where(field('id')->gt($cursor));
         }
+        if (!is_null($q)) $query = $query->andWhere(criteria("MATCH (title,content) AGAINST (%s)", $q));
 
         $query = $query->compile();
-
         $stmt = DBH::connect()->prepare($query->sql());
         $stmt->execute($query->params());
 
@@ -76,17 +85,22 @@ class Blog extends Model
     public function insert(object $values)
     {
         $changeset = $this->changeset($values)
-            ->required("content", "title", "read_time", "user_id")
+            ->add_definition(BlogStateEnum::get_json_def())
+            ->required("content", "title", "user_id")
             ->validate();
 
         if ($changeset->isValid() === false) {
             return ["errors" => $changeset->getErrors()];
         }
 
+        $word_per_minute = 275;
+        $values->read_time = ceil(str_word_count($values->content) / $word_per_minute);
+
         $query = self::QueryFactory()->insert(self::TABLE, (array) $values)->compile();
 
         $stmt = DBH::connect()->prepare($query->sql());
-        return $stmt->execute($query->params());
+        $stmt->execute($query->params());
+        return DBH::connect()->lastInsertId();
     }
 
     public function delete(int $id)

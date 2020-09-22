@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Core\Helpers\ImageUploadHandler;
 use App\Models\Blog;
 
 class BlogController
@@ -15,6 +16,7 @@ class BlogController
     {
         $body = $req->getBody();
 
+        $body->user_id = (int)$req->user["id"];
         $result = $this->blogCtx->insert($body);
         if (isset($result["errors"])) $res->status(422);
         $res->json($result);
@@ -29,8 +31,10 @@ class BlogController
 
         $cursor = @$params['cursor'];
         $limit = @$params['limit'] ?? 12;
+        $order = @$params['order'] ?? "desc";
+        $q = @$params['q'];
 
-        $blogs = $this->blogCtx->get_all_listed($cursor, $limit);
+        $blogs = $this->blogCtx->get_all_listed($cursor, $limit, $order, $q);
         $res->json($blogs);
     }
     public function show($req, $res)
@@ -48,5 +52,12 @@ class BlogController
 
         $blog = $this->blogCtx->update($params["id"], $body);
         $res->json($blog);
+    }
+    public function upthumb($req, $res)
+    {
+        $result = ImageUploadHandler::persist("thumbnail", "thumbnails");
+
+        if (isset($result["errors"])) $res->status(422);
+        $res->json($result);
     }
 }
