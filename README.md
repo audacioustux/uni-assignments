@@ -46,7 +46,7 @@ Join `Nobinalo Programming Community`: https://discord.gg/UBGKu8X
 
 ```
  ______________________________________ 
-/ Read The Book 'Pragmatic Pragrammer' \
+/ Read The Book 'Pragmatic Programmer' \
 \ you dum'ass                          /
  -------------------------------------- 
         \   ^__^
