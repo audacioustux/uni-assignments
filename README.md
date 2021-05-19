@@ -5,12 +5,12 @@ the codes are cringe worthy... just had to pass the course.. contact me if you n
 
 ```
  _____________________________________
-/ Join Nobinalo Programming Community \
-\ (NPC): https://discord.gg/UBGKu8X   /
+< Join Nobinalo Programming Community >
  -------------------------------------
         \   ^__^
          \  (oo)\_______
             (__)\       )\/\
                 ||----w |
                 ||     ||
-```
+``` 
+### https://discord.gg/UBGKu8X
