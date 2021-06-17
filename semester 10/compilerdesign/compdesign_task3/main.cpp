@@ -89,11 +89,9 @@ void parse_token(string token) {
   if (token.length() == 1 && isDelimeter(token[0])) {
     auto _token = token;
 
-    switch (token[0]) {
-    case ' ':
+    if (token[0] == ' ')
       _token = "<space>";
-      break;
-    }
+
     cout << "delimiter: " << _token << endl;
     return;
   }
@@ -110,9 +108,9 @@ int main() {
       regex re(string("([") + DELIMITERS + "]" + "|[^" + DELIMITERS + "]+)");
 
       regex_iterator<string::iterator> re_iter(line.begin(), line.end(), re);
-      regex_iterator<string::iterator> rend;
+      regex_iterator<string::iterator> re_iter_end;
 
-      while (re_iter != rend) {
+      while (re_iter != re_iter_end) {
         parse_token(re_iter->str());
         ++re_iter;
       }
