@@ -75,9 +75,6 @@ void parse_token(string token) {
     case ' ':
       _token = "<space>";
       break;
-    case '\n':
-      _token = "<lineBreak>";
-      break;
     }
     cout << "delimiter: " << _token << endl;
   }
