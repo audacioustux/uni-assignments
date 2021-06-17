@@ -1,3 +1,4 @@
+#include <cctype>
 #include <fstream>
 #include <iostream>
 #include <regex>
@@ -9,8 +10,8 @@
 
 using namespace std;
 
-bool isNumericConstant(string word) {
-  for (char const &c : word) {
+bool isNumericConstant(string token) {
+  for (char const &c : token) {
     if (isdigit(c)) {
       continue;
     }
@@ -19,11 +20,11 @@ bool isNumericConstant(string word) {
   return true;
 }
 
-bool isOperator(string word) {
+bool isOperator(string token) {
   const string operators[] = {"+", "-", "*", "/", "=", "+=", "++"};
 
   for (string const &op : operators) {
-    if (word == op) {
+    if (token == op) {
       return true;
     }
   }
@@ -31,11 +32,11 @@ bool isOperator(string word) {
   return false;
 }
 
-bool isDelimeter(char ch) {
+bool isDelimeter(char token) {
   const char delimiters[] = DELIMITERS;
 
   for (char const &delimiter : delimiters) {
-    if (ch == delimiter) {
+    if (token == delimiter) {
       return true;
     }
   }
@@ -43,16 +44,29 @@ bool isDelimeter(char ch) {
   return false;
 }
 
-bool isKeyword(string word) {
+bool isKeyword(string token) {
   const string keywords[] = {"int", "float", "const", "string", "return"};
 
   for (string const &kw : keywords) {
-    if (word == kw) {
+    if (token == kw) {
       return true;
     }
   }
 
   return false;
+}
+
+bool isIdent(string token) {
+  if (!(isalpha(token[0]) || token[0] == '_')) {
+    return false;
+  }
+  for (char const &c : token) {
+    if (isalnum(c)) {
+      continue;
+    }
+    return false;
+  }
+  return true;
 }
 
 void parse_token(string token) {
@@ -68,6 +82,10 @@ void parse_token(string token) {
     cout << "operator: " << token << endl;
     return;
   }
+  if (isIdent(token)) {
+    cout << "identifier: " << token << endl;
+    return;
+  }
   if (token.length() == 1 && isDelimeter(token[0])) {
     auto _token = token;
 
@@ -77,7 +95,10 @@ void parse_token(string token) {
       break;
     }
     cout << "delimiter: " << _token << endl;
+    return;
   }
+
+  cout << "unrecognized: " << token << endl;
 }
 
 int main() {
