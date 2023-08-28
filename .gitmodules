@@ -1,0 +1,12 @@
+[submodule "Adv_DotNet/HelpDebugGov"]
+	path = Adv_DotNet/HelpDebugGov
+	url = https://github.com/audacioustux/HelpDebugGov
+[submodule "Adv_DotNet/zero-hunger"]
+	path = Adv_DotNet/zero-hunger
+	url = https://github.com/audacioustux/zero-hunger
+[submodule "DataCom/datacomm-final-project-uni"]
+	path = DataCom/datacomm-final-project-uni
+	url = https://github.com/audacioustux/datacomm-final-project-uni
+[submodule "Adv_DotNet/dotnet-uni-course"]
+	path = Adv_DotNet/dotnet-uni-course
+	url = https://github.com/audacioustux/dotnet-uni-course
