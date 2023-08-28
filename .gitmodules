@@ -10,3 +10,15 @@
 [submodule "Adv_DotNet/dotnet-uni-course"]
 	path = Adv_DotNet/dotnet-uni-course
 	url = https://github.com/audacioustux/dotnet-uni-course
+[submodule "Computer_Graphics/CG-Group-Project"]
+	path = Computer_Graphics/CG-Group-Project
+	url = https://github.com/audacioustux/CG-Group-Project
+[submodule "Microprocessor/MAES_FINAL_PROJECT"]
+	path = Microprocessor/MAES_FINAL_PROJECT
+	url = https://github.com/audacioustux/MAES_FINAL_PROJECT
+[submodule "Adv_Java/apj-uni-course"]
+	path = Adv_Java/apj-uni-course
+	url = https://github.com/audacioustux/apj-uni-course
+[submodule "Adv_DBMS/adbmsfinal"]
+	path = Adv_DBMS/adbmsfinal
+	url = https://github.com/audacioustux/adbmsfinal
